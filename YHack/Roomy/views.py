@@ -35,13 +35,16 @@ def chores(request):
                                                  'charges': getCharges()})
 
 def addChore(request):
-    '''
     name = request.POST['name']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    user = User(name=name, email=email, phone=phone)
-    user.save()
-    '''
+    frequency = request.POST['frequency']
+    rotates = request.POST['rotates']
+    users = request.POST['users']
+    users = [user for user in User.objects.all() if str(user.id) in users]
+    chore = Chore(name=name, frequency=frequency, rotates=rotates)
+    chore.save()
+    for user in users:
+      chore.users.add(user)
+    chore.save()
     return HttpResponse()
 
 def newHouse(request):
@@ -71,7 +74,6 @@ def doCharge(request):
     for user in users:
       charge.users.add(user)
     charge.save()
-    print "SAVED"
     return HttpResponse()
 
 def lists(request):

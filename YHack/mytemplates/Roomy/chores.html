@@ -18,13 +18,12 @@ function addChore()
   }
 
   if (ids.length == 0) {
-    alert("Nobody paying you?  What?");
+    alert("Nobody doing the chore?  What?");
     return;
   }
 
   var frequency = $('input[name=frequency]:checked').val();
-  var rotates = $('input[name=rotates]:checked').val();
-
+  var rotates = document.getElementById('rotates').checked;
   var name = document.getElementById('name').value;
 
   $.post('/addChore', {'name': name, 'frequency': frequency, 'rotates': rotates, 'users': JSON.stringify(ids)}, function() {
@@ -56,8 +55,7 @@ People
                    Monthly <input type="radio" value="monthly" name="frequency">
                    Once <input type="radio" value="once" name="frequency">
                    <br>
-        Rotates? Yes <input checked type="radio" value="yes" name="rotates">
-                 No <input type="radio" value="no" name="rotates">
+        Rotates? <input type="checkbox" id="rotates">
                  <br>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
               style="background-color: rgb(114, 218, 114);"

@@ -18,3 +18,9 @@ class Charge(models.Model):
     note=models.CharField(max_length=140)
     amount=models.DecimalField(max_digits=10, decimal_places=2)
     users=models.ManyToManyField(User)
+
+class Chore(models.Model):
+    name=models.CharField(max_length=140)
+    users=models.ManyToManyField(User)
+    frequency=models.CharField(max_length=20)
+    rotates=models.BooleanField()
