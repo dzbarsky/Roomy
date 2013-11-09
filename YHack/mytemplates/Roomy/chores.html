@@ -43,7 +43,8 @@ function addChore()
 		<label class="control-label" for="name">Name</label>
 <div class="controls">
 		<input id="name" type="text"></div></div>
-		<div id="users" class="controls">
+    <div class="controls">
+		<div id="users">
 				{% for user in users %}
 				<div class="checkbox">
 						<label>
@@ -52,6 +53,7 @@ function addChore()
 						{{ user.name }}
 </div></label></div>
 				{% endfor %}
+      </div>
 				<br />
 		<div class="control-group">
 				<div class="controls">
