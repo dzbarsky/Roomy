@@ -23,9 +23,10 @@ function addChore()
   }
 
   var frequency = $('input[name=frequency]:checked').val();
+  var day = $('input[name=day]:checked').val();
   var name = document.getElementById('name').value;
 
-  $.post('/addChore', {'name': name, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
+  $.post('/addChore', {'name': name, 'day': day, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
 }
