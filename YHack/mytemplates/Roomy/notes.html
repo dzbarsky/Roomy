@@ -17,7 +17,16 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
 </div>
 
 <div style="float:left; float:top; width:200px; margin-left:400px;">
-    <h1>testing</h1>
+    {%if notes %}
+    {% for note in notes %}
+
+    <div class='savednote' id="{{note.id}}">
+    {{note.title}}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h1>no notes in database</h1>
+    {% endif%}
 </div>
 
 
@@ -32,15 +41,22 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
 	bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 </script>
 <script>
-var numNotes = 0;
-// $(document).ready(function() {
-//     $('#notes').hide();
-// })
+var java_notes = [];
+$(document).ready(function() {
+    {% for note in notes %}
+        var jnote = {};
+        jnote['id'] = {{note.id}}; 
+        jnote['title'] = "{{note.title}}";      
+        jnote['content'] = "{{note.content}}";
+        java_notes[{{note.id}}] = jnote;
+    {% endfor %}
+    console.log(java_notes);
+})
 $(document).on('click', '#write', function() {
     $('#notes').toggle();
     $('#save').toggle();
 });
-$(document).on('click', '#save', function(){
+$(document).on('click', '#save', function() {
     var noteData = {}
     title = document.getElementById("title").value;
     content = nicEditors.findEditor('area2').getContent();
@@ -51,6 +67,19 @@ $(document).on('click', '#save', function(){
         alert('success!');
     });
 });
+
+$(document).on('click', '.savednote', function(){
+    
+    var id = $(this).attr('id');
+    note = java_notes[id];
+    content = note['content'];
+    // for note in java_notes:
+    //     if id == note.id:
+    //         content = note.content;
+    nicEditors.findEditor('area2').setContent(content);
+    $('#notes').show();
+
+})
 </script>
 
 {% endblock %}

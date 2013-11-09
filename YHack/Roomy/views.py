@@ -33,6 +33,7 @@ def getCharges(request):
                 continue
     return charges
 
+
 def getUsers():
     return [user for user in User.objects.all()]
 
@@ -51,7 +52,8 @@ def getChores(request):
 def getParams(request):
     return {'charges': getCharges(request),
             'users': getUsers(),
-            'chores': getChores(request)}
+            'chores': getChores(request),
+            'notes': getNotes(request)}
 
 def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
@@ -121,8 +123,7 @@ def doCharge(request):
 def lists(request):
     return render(request, 'Roomy/lists.html', getParams(request))
 
-def notes(request):
-    return render(request, 'Roomy/notes.html', getParams())
+
 
 def savedNotes(request):
     title=request.POST['title']
@@ -133,3 +134,15 @@ def savedNotes(request):
     note = Note(title=title, content=content, house=house_object)
     note.save()
     return HttpResponse()
+
+def getNotes(request):
+    notes = []
+    # if 'username' not in request.session:
+    #     return notes
+
+    for note in Note.objects.all():
+        notes.append(note)
+    return notes
+
+def notes(request):
+    return render(request, 'Roomy/notes.html', { 'notes': getNotes(request) })
