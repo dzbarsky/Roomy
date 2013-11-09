@@ -40,10 +40,13 @@ def getCharges(request):
 
 def getUsers(request):
     users = []
-    if 'houseName' not in request.session:
-        return users
-    house = House.objects.get(name=request.session['houseName'])
-    return [user for user in User.objects.filter(house=house.id)]
+    # if 'houseName' not in request.session:
+    #    return users
+    if request.session['houseName']:
+        house = House.objects.get(name=request.session['houseName'])
+        return [user for user in User.objects.filter(house=house.id)]
+    else:
+        return [user for user in User.objects.all()]
 
 def getChores(request):
     chores = []
