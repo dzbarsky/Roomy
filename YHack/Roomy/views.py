@@ -60,7 +60,6 @@ def doCharge(request):
     charge.save()
     for user in users:
       charge.users.add(user)
-    charge.save()
     print "SAVED"
     return HttpResponse()
 
