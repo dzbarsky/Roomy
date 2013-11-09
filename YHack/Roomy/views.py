@@ -44,7 +44,10 @@ def getUsers(request):
     #    return users
     if request.session['houseName']:
         house = House.objects.get(name=request.session['houseName'])
-        return [user for user in User.objects.filter(house=house.id)]
+        if house:
+            return [user for user in User.objects.filter(house=house.id)]
+        else:
+            return [user for user in User.objects.all()]
     else:
         return [user for user in User.objects.all()]
 
