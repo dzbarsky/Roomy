@@ -84,7 +84,7 @@
 			<br />
 			<ul>
 					{% for charge in charges|slice:"-5:" reversed %}
-					<li {% if forloop.first %}style="padding-top: none;" {% elif forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
+					<li {% if forloop.first %}style="padding-top: none;"{% endif %} {% if forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
 					<span class="glyphicon glyphicon-usd"></span>
 							{% for user in charge.users.all %}
 									{% if forloop.last %}
