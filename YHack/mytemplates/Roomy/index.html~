@@ -5,6 +5,7 @@
 {% block scripts %}
   <script src="https://cdn.firebase.com/v0/firebase.js"></script>
   <script src="/static/js/jquery.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block content %}
@@ -19,7 +20,7 @@
 <button id="clear-button" onclick="javascript:clearCanvas()" class="btn">Clear</button>
 <script>
 //Create a reference to the pixel data for our drawing.
-var pixelDataRef = new Firebase('https://roomy-{{ request.session.houseName }}.firebaseio-demo.com/');
+var pixelDataRef = new Firebase('https://roomy-{% autoescape on %}{{ request.session.houseName }}{% endautoescape%}.firebaseio-demo.com/');
 
 $(document).ready(function () {
   //Set up some globals
