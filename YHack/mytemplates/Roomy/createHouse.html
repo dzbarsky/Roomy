@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Roomy: Create House{% endblock %}
+
+{% block content %}
+
 Name<input name='name' class='basic' type='text'><br>
 Number<input name='stnumber' class='basic' type='text'><br>
 Street<input name='street' class='basic' type='text'><br>
@@ -51,8 +57,10 @@ $('#submit').click(function() {
         users[$(this).attr('id')] = JSON.stringify(user);
     });
     $.post('/newHouse', { houseData: JSON.stringify(houseData),users: JSON.stringify(users) }, function() {
-	alert('success!');
+    window.location = '/';	
     });
 });
+
 </script>
 
+{% endblock %}

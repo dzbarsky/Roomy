@@ -59,19 +59,25 @@ def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
 
 def createHouse(request):
-    return render(request, 'Roomy/createHouse.html', getParamsrequest())
+    phone = request.POST['phone']
+    user = User.objects.get(id=request.session['userID'])
+    user.phone = phone
+    user.save()
+    return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
-    name = request.GET['name']
-    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
+    name = request.POST['name']
+    fb_uid = request.POST['fb_uid']
+    image = request.POST['image']
+    user = User(name=name, fb_uid=fb_uid, image=image)
+    user.save()
+    request.session['username'] = name
+    request.session['userID'] = user.id
+    return HttpResponse()
 
 def newUser(request):
-    name = request.session['username']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    user = User(name=name, email=email, phone=phone)
-    user.save()
-    return createHouse(request)
+    user = User.objects.get(id=request.session['userID'])
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{'name': user.name}))
 
 def chores(request):
     return render(request, 'Roomy/chores.html', getParams(request))
@@ -89,21 +95,32 @@ def addChore(request):
     chore.save()
     return HttpResponse()
 
+def base(request):
+    user = User.objects.get(name=request.session['username'])
+    house = user.house
+    houseName = house.name
+    return HttpResponse()
+
 def newHouse(request):
+    user = User.objects.get(name=request.session['username'])
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
-		  number=data['stnumber'], \
-		  street=data['street'], \
-		  city=data['city'], \
-		  state=data['state'], \
-		  zipcode=data['zipcode'])
+        number=data['stnumber'], \
+        street=data['street'], \
+        city=data['city'], \
+        state=data['state'], \
+        zipcode=data['zipcode'])
     house.save()
+    user.house = house
     users = request.POST['users']
     for ind in json.loads(users):
-	user = json.loads(json.loads(users)[ind])
-        newUser = User(name=user['username'],email=user['email'],phone=user['phone'])
+        user = json.loads(json.loads(users)[ind])
+        newUser = User(name=user['username'],email=user['email'],phone=user['phone'],house=house)
         newUser.save()
-        house.users.add(newUser)
+    request.session['houseName'] = data['name']
+    return render(request, 'Roomy/index.html')
+
+def viewHouse(request):
     return HttpResponse()
 
 def charge(request):
@@ -146,3 +163,9 @@ def getNotes(request):
 
 def notes(request):
     return render(request, 'Roomy/notes.html', { 'notes': getNotes(request) })
+
+def channel(request):
+    return render(request, 'Roomy/channel.html')
+
+def test(request):
+    return render(request, 'Roomy/test.html')

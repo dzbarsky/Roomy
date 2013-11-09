@@ -101,8 +101,13 @@ h2 {
 		text-transform: uppercase;
 }
 
-.navbar-text {
+#welcome {
 		font-size: 12px;
+}
+
+.navbar-collapse{
+		position: relative;
+		left: 50px;
 }
 
 .feed ul{
