@@ -12,6 +12,7 @@ def newUser(request):
     phone = request.POST['phone']
     user = User(name=name, email=email, phone=phone)
     user.save()
+    return HttpResponse()
 
 def charge(request):
     users = User.objects.all()
@@ -19,4 +20,3 @@ def charge(request):
     for user in users:
         usersDict.append(user)
     return render(request, 'Roomy/charge.html', {'users': users})
-
