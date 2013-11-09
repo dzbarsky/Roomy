@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -15,7 +14,6 @@
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap.css" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="/static/css/template.css" rel="stylesheet">
 
@@ -93,7 +91,6 @@ $(document).on('click', '#save', function() {
         var jnote = {};
         console.log(java_notes[id]);
         if(java_notes[id]){
-            alert("fuck with me");
             java_notes[id].content = content;
             java_notes[id].db = 0;
             console.log(java_notes[id]);
@@ -105,10 +102,10 @@ $(document).on('click', '#save', function() {
             jnote['db'] = 0;
             java_notes[id] = jnote;
             var newNote = "<div class='savednote' id="+id+">"+title+"</div>";
+            console.log(newNote);
             $('#notelist').append(newNote);
         }   
         console.log(java_notes);
-        alert('success!' + id + title);        
     });
 
 });
