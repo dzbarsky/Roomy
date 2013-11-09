@@ -39,7 +39,11 @@ function addChore()
 
 <h2>Chores</h2>
 
-Chore <input id="name"> <br>
+<form class=".form-horizontal">
+<div class="control-group">
+		<label class="control-label" for="name">Chore</label>
+<div class="controls">
+		<input id="name" type="text"></div></div>
 People
 		<div id="users" class="controls">
 				{% for user in users %}

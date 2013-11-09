@@ -72,7 +72,7 @@
 			<div class="text-center feed-header">My Charges</div>
 			<br />
 			<ul>
-					{% for charge in charges reversed %}
+					{% for charge in charges|slice:"-5:" reversed %}
 					<li {% if forloop.first %}style="padding-top: none;" {% elif forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
 					<span class="glyphicon glyphicon-usd"></span>
 							{% for user in charge.users.all %}
@@ -82,14 +82,14 @@
 											{{ user.name }}, 
 									{% endif %}
 							{% endfor %}
-							were charged ${{ charge.amount }} for {{charge.note}}
+							{% if charge.users.all|length > 1 %}were{% else %}was{% endif %} charged ${{ charge.amount }} for {{charge.note}}
 					</li>
 					{% endfor %}
 			<br />
 			<div class="text-center feed-header">My Chores</div>
 			<br />
 			<ul>
-					{% for chore in chores reversed %}
+					{% for chore in chores|slice:"-5:" reversed %}
 					<li {% if forloop.first %}style="padding-top: none;" {% elif forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
 					<span class="glyphicon glyphicon-usd"></span>
 							{% for user in chore.users.all %}
@@ -103,9 +103,6 @@
 					</li>
 					{% endfor %}
 			<br />
-			<div class="feed-item">Chore 1</div>
-			<div class="feed-item">Chore 2</div>
-			<div class="feed-item">Chore 3</div>
 	</div>
 
 	</div>
