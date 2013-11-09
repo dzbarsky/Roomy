@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^createUser\/$', views.createUser, name='createUser'),
     url(r'^addChore$', views.addChore, name='addChore'),
     url(r'^signin$', views.signin, name='signin'),
+	url(r'^logout\/$', views.logout, name='logout')
 )

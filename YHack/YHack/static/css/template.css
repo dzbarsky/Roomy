@@ -38,8 +38,8 @@ h2 {
 	background-color: #858585;	
 }
 
-.navbar-nav a::before,
-.navbar-nav a::after {
+.navbar-nav a::before:not(#welcome),
+.navbar-nav a::after:not(#welcome) {
 	position: absolute;
 	left: 0;
 	width: 100%;
@@ -55,22 +55,22 @@ h2 {
 	transform: translateY(-10px);
 }
 
-.navbar-nav a::before {
+.navbar-nav a::before:not(#welcome) {
 	top: 0;
 	-webkit-transform: translateY(-10px);
 	-moz-transform: translateY(-10px);
 	transform: translateY(-10px);
 }
 
-.navbar-nav a::after {
+.navbar-nav a::after:not(#welcome) {
 	bottom: 0;
 	-webkit-transform: translateY(10px);
 	-moz-transform: translateY(10px);
 	transform: translateY(10px);
 }
 
-.navbar-nav a:hover,
-.navbar-nav a:focus {
+.navbar-nav a:hover:not(#welcome),
+.navbar-nav a:focus:not(#welcome) {
 	color: #fff;
 }
 
@@ -99,6 +99,10 @@ h2 {
 		font-family: 'Lato';
 		font-weight: bold;
 		text-transform: uppercase;
+}
+
+.navbar-text {
+		font-size: 12px;
 }
 
 .feed ul{

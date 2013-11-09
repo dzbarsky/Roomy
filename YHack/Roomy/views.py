@@ -6,13 +6,20 @@ import json
 
 def signin(request):
     name = request.GET['name']
-    request.session['name'] = name
     existing = User.objects.filter(name=name)
     if existing.count() > 0:
         user = User.objects.get(name=name)
+        request.session['username'] = name
         return render(request, 'Roomy/index.html', dict(getParams(), **{'roomyUser': user.id}))
     else:
         return createUser(request)
+
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return render(request, 'Roomy/index.html')
 
 def getCharges():
     return [charge for charge in Charge.objects.all()]
@@ -36,7 +43,7 @@ def createUser(request):
     return render(request, 'Roomy/newuser.html', getParams())
 
 def newUser(request):
-    name = request.session['name']
+    name = request.session['username']
     email = request.POST['email']
     phone = request.POST['phone']
     user = User(name=name, email=email, phone=phone)
