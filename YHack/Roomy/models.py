@@ -16,5 +16,5 @@ class Houses(models.Model):
 
 class Charge(models.Model):
     note=models.CharField(max_length=140)
-    amount=models.DecimalField()
+    amount=models.DecimalField(max_digits=10, decimal_places=2)
     users=models.ManyToManyField(User)
