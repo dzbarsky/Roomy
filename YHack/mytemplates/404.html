@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Roomy: Home{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+  <script src="/static/js/jquery.min.js"></script>
+{% endblock %}
+
+{% block content %}
+{% if request.session.username %}
+Welcome to Roomy, {{ request.session.username }}!
+{% endif %}
+
+Sorry, your page could not be found!
+{% endblock %}

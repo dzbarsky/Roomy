@@ -4,17 +4,36 @@
 
 {% block content %}
 
-Title<input name='title' class='basic' type='text'><br>
-<button id='write'><b>write</b></button><br>
-<div class='notewrapper'id='notes'>
-<textarea id="area2" style="width: 300px; height: 100px;">
-	Some Initial Content was in this textarea
+
+<div class='wrapper' style'float:left; width:100%;'>
+Title<input id='title' value="Note title" class='basic' type='text'><br>
+<button id='write'><b>Make Note</b></button><br>
+<div class='notewrapper'id='notes' style="display:none; margin-right:200px;">
+<textarea id="area2" style="width: 300px; height: 300px;">
+	Fill in this content
 </textarea>
 </div>
+<button id='save' style="display:none"><b>Save Note</b></button><br>
+</div>
+
+<div style="float:left; float:top; width:200px; margin-left:400px;">
+    {%if notes %}
+    {% for note in notes %}
+
+    <div class='savednote' id="{{note.id}}">
+    {{note.title}}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h1>no notes in database</h1>
+    {% endif%}
+</div>
+
+
 
 {% endblock %}
 
-{% block script %}
+{% block scripts %}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/static/js/nicEdit.js"></script>
@@ -22,13 +41,45 @@ Title<input name='title' class='basic' type='text'><br>
 	bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 </script>
 <script>
-$('#notes').hide();
-var numNotes = 0;
-var hide = 0;
-//alert($("#write").val());
-$('#write').click(function() {
+var java_notes = [];
+$(document).ready(function() {
+    {% for note in notes %}
+        var jnote = {};
+        jnote['id'] = {{note.id}}; 
+        jnote['title'] = "{{note.title}}";      
+        jnote['content'] = "{{note.content}}";
+        java_notes[{{note.id}}] = jnote;
+    {% endfor %}
+    console.log(java_notes);
+})
+$(document).on('click', '#write', function() {
     $('#notes').toggle();
+    $('#save').toggle();
 });
+$(document).on('click', '#save', function() {
+    var noteData = {}
+    title = document.getElementById("title").value;
+    content = nicEditors.findEditor('area2').getContent();
+    noteData['title']=title;
+    noteData['content']=content;
+    noteData['house']=1;
+    $.post('/savedNotes', noteData, function() {
+        alert('success!');
+    });
+});
+
+$(document).on('click', '.savednote', function(){
+    
+    var id = $(this).attr('id');
+    note = java_notes[id];
+    content = note['content'];
+    // for note in java_notes:
+    //     if id == note.id:
+    //         content = note.content;
+    nicEditors.findEditor('area2').setContent(content);
+    $('#notes').show();
+
+})
 </script>
 
 {% endblock %}
