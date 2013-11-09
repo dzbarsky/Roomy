@@ -13,11 +13,10 @@
 <ul>
   {% for chore in chores %}
     {% if user in chore.users.all %}
-      <li> {{ chore.name }} </li>
+	<li> {{ chore.name }} </li><br />
     {% endif %}
   {% endfor %}
-<br />
 {% endfor %}
-
+</ul>
 
 {% endblock %}

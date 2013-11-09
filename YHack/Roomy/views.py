@@ -11,8 +11,9 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
-        house = user.house
-        request.session['houseName'] = house.name
+        if user.house:
+            house = user.house
+            request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
         return createUser(request)
@@ -118,7 +119,9 @@ def newHouse(request):
     return render(request, 'Roomy/index.html')
 
 def viewHouse(request):
-    return render(request, 'Roomy/viewHouse.html', getParams(request))
+    house = House.objects.get(name=request.session['houseName'])
+    users = User.objects.filter(house=house.id)
+    return render(request, 'Roomy/viewHouse.html', dict(getParams(request), **{'house': house, 'users': users}))
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
