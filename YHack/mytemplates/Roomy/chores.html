@@ -43,7 +43,9 @@ function addChore()
 <div class="control-group">
 		<label class="control-label" for="name">Name</label>
 <div class="controls">
-		<input id="name" type="text"></div></div>
+		<input id="name" type="text">
+  </div>
+</div>
 		<div id="users" class="controls">
 				{% for user in users %}
 				<div class="checkbox">
@@ -72,13 +74,12 @@ function addChore()
 		   </div>
    </div>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
- 		   </div>
-   </div>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
               style="background-color: rgb(114, 218, 114);"
               onclick="javascript:addChore();" id="chore_submit">
 						Add Chore!</button>
-				</div>
+      </div>
+</form>
 	
 	{% endblock %}
 
