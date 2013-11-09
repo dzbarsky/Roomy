@@ -60,7 +60,8 @@ def createHouse(request):
     return render(request, 'Roomy/createHouse.html', getParamsrequest())
 
 def createUser(request):
-    return render(request, 'Roomy/newuser.html', getParams(request))
+    name = request.GET['name']
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
 
 def newUser(request):
     name = request.session['username']
