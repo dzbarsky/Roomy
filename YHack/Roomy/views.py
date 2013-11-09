@@ -10,9 +10,11 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
+        house = user.house
+        request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
-        return createUser(request)
+        return newUser(request)
 
 def logout(request):
     try:
@@ -91,12 +93,6 @@ def addChore(request):
     for user in users:
       chore.users.add(user)
     chore.save()
-    return HttpResponse()
-
-def base(request):
-    user = User.objects.get(name=request.session['username'])
-    house = user.house
-    houseName = house.name
     return HttpResponse()
 
 def newHouse(request):
