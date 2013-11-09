@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Roomy: Create House{% endblock %}
+
+{% block content %}
+
 Name<input name='name' class='basic' type='text'><br>
 Number<input name='stnumber' class='basic' type='text'><br>
 Street<input name='street' class='basic' type='text'><br>
@@ -13,6 +19,9 @@ Zip<input name='zipcode' class='basic' type='text'><br>
     </div>
 </div>
 <button id='submit'>Submit</button>
+
+{% endblock %}
+{% block scripts %}
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
@@ -56,3 +65,4 @@ $('#submit').click(function() {
 });
 </script>
 
+{% endblock %}
