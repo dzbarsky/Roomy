@@ -10,7 +10,7 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
-        return render(request, 'Roomy/index.html', dict(getParams(), **{'roomyUser': user.id}))
+        return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
         return createUser(request)
 
@@ -21,44 +21,66 @@ def logout(request):
         pass
     return render(request, 'Roomy/index.html')
 
-def getCharges():
-    return [charge for charge in Charge.objects.all()]
+def getCharges(request):
+    charges = []
+    if 'username' not in request.session:
+        return charges
+
+    for charge in Charge.objects.all():
+        for user in charge.users.all():
+            if user.name == request.session['username']:
+                charges.append(charge)
+                continue
+    return charges
 
 def getUsers():
     return [user for user in User.objects.all()]
 
-def getChores():
-    return [chore for chore in Chore.objects.all()]
+def getChores(request):
+    chores = []
+    if 'username' not in request.session:
+        return chores
 
-def getParams():
-    return {'charges': getCharges(), 'users': getUsers(), 'chores': getChores()}
+    for chore in Chore.objects.all():
+        for user in chore.users.all():
+            if user.name == request.session['username']:
+                chores.append(chore)
+                continue
+    return chores
+
+def getParams(request):
+    return {'charges': getCharges(request),
+            'users': getUsers(),
+            'chores': getChores(request)}
 
 def index(request):
-    return render(request, 'Roomy/index.html', getParams())
+    return render(request, 'Roomy/index.html', getParams(request))
 
 def createHouse(request):
-    return render(request, 'Roomy/createHouse.html', getParams())
+    return render(request, 'Roomy/createHouse.html', getParamsrequest())
 
 def createUser(request):
-    return render(request, 'Roomy/newuser.html', getParams())
+    name = request.GET['name']
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
 
 def newUser(request):
-    name = request.POST['name']
+    name = request.session['username']
     email = request.POST['email']
     phone = request.POST['phone']
     user = User(name=name, email=email, phone=phone)
     user.save()
-    return HttpResponse()
+    return createHouse(request)
 
 def chores(request):
-    return render(request, 'Roomy/chores.html', getParams())
+    return render(request, 'Roomy/chores.html', getParams(request))
 
 def addChore(request):
     name = request.POST['name']
     frequency = request.POST['frequency']
+    day = request.POST['day']
     users = request.POST['users']
     users = [user for user in User.objects.all() if str(user.id) in users]
-    chore = Chore(name=name, frequency=frequency)
+    chore = Chore(name=name, frequency=frequency, day=day)
     chore.save()
     for user in users:
       chore.users.add(user)
@@ -83,7 +105,7 @@ def newHouse(request):
     return HttpResponse()
 
 def charge(request):
-    return render(request, 'Roomy/charge.html', getParams())
+    return render(request, 'Roomy/charge.html', getParams(request))
 
 def doCharge(request):
     note = request.POST['note']
@@ -94,11 +116,10 @@ def doCharge(request):
     charge.save()
     for user in users:
       charge.users.add(user)
-    print "SAVED"
     return HttpResponse()
 
 def lists(request):
-    return render(request, 'Roomy/lists.html', getParams())
+    return render(request, 'Roomy/lists.html', getParams(request))
 
 def notes(request):
     return render(request, 'Roomy/notes.html', getParams())
