@@ -4,5 +4,23 @@
 
 <h2>Chores</h2>
 
-{% endblock %}
+Chore <input id="name"> <br>
+People
+				{% for user in users %}
+				<input type="radio" name="users">
+				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
+						{{ user.name }}
+				</div>
+				{% endfor %}
+        <br>
+        Frequency: Daily <input type="radio" value="daily" name="frequency">
+                   Weekly <input type="radio" value="weekly" name="frequency">
+                   Monthly <input type="radio" value="monthly" name="frequency">
+                   Once <input type="radio" value="once" name="frequency">
+                   <br>
+        Rotates? Yes <input type="radio" value="yes" name="rotates">
+                 No <input type="radio" value="no" name="rotates">
+                 <br>
+
+	{% endblock %}
 
