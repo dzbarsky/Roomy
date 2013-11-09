@@ -4385,26 +4385,6 @@ textarea.input-group-sm > .input-group-btn > .btn {
   -webkit-overflow-scrolling: touch;
 }
 
-.navbar-collapse:before,
-.navbar-collapse:after {
-  display: table;
-  content: " ";
-}
-
-.navbar-collapse:after {
-  clear: both;
-}
-
-.navbar-collapse:before,
-.navbar-collapse:after {
-  display: table;
-  content: " ";
-}
-
-.navbar-collapse:after {
-  clear: both;
-}
-
 .navbar-collapse.in {
   overflow-y: auto;
 }
