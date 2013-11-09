@@ -76,7 +76,7 @@ function createLink()
 		<br />
 		<div class="control-group">
 				<div class="controls">
-						<button id="charge-btn" type="submit" class="btn btn-lg" style="background-color: rgb(3, 213, 3);" onclick="javascript:createLink();" id="charge_submit">
+						<button id="charge-btn" type="submit" class="btn btn-lg" style="background-color: rgb(114, 218, 114);" onclick="javascript:createLink();" id="charge_submit">
 						CHARGE</button>
 				</div>
 		</div>
