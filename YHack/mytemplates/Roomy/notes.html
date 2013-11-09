@@ -1,38 +1,32 @@
-{% extends "base.html" %}
 
-{% block title %}Roomy: Notes{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" type="image/png" href="/static/images/house.png">
 
-{% block content %}
+	<title>Roomy: Notes</title>
 
+    <link href="/static/css/firebase.css" rel="stylesheet">
 
-<div class='wrapper' style'float:left; width:100%;'>
-Title<input id='title' value="" class='basic' type='text'><br>
-<button id='write'><b>Make New Note</b></button><br>
-<div class='notewrapper'id='notes' style="margin-right:200px;">
-<textarea id="area2" style="width: 300px; height: 300px;">
-</textarea>
-</div>
-<button id='save'><b>Save Note</b></button><br>
-</div>
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
 
-<div style="float:left; float:top; width:300px; margin-left:400px;">
-    {%if notes %}
-    {% for note in notes %}
+    <!-- Custom styles for this template -->
+    <link href="/static/css/template.css" rel="stylesheet">
 
-    <div class='savednote' id="{{note.id}}">
-    {{note.title}}
-    </div>
-    {% endfor %}
-    {% else %}
-    <h1>You don't have any notes yet!</h1>
-    {% endif%}
-</div>
+	<!-- webkit fonts 
+	<script type="text/javascript" src="//use.typekit.net/ykk1qod.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	-->
 
+	<!-- google web fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700|Merriweather+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
-
-{% endblock %}
-
-{% block scripts %}
 
 <script src="/static/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/static/js/nicEdit.js"></script>
@@ -146,5 +140,98 @@ $(document).on('click', '.savednote', function(){
 })
 
 </script>
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-{% endblock %}
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-custom navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+		  <!-- <span class="glyphicon glyphicon-home btn-lg"></span> -->
+		  <a class="navbar-brand" href="/">
+				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
+				  <span style="font-weight: bold;">Roomy</span></a>
+		  <p class="navbar-text" style="font-size: 16px;">
+		  {% if request.session.houseName %}<a href="/viewHouse/">{{ request.session.houseName }}</a>{% endif %}
+		  
+		  </p>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
+				  <li {% if request.path == '/chores/' %} class="active"{% endif %}><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
+				  <li {% if request.path == '/charge/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
+				  {% if request.session.username %}<p class="navbar-text" id="welcome">Welcome, {{ request.session.username}}!<a href="/logout/" style="font-size: 10px;">(logout){% endif %}</a></p>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+
+    </div><!-- /.container -->
+
+	<div class="row">
+
+			<div class="col-md-9 content">
+					
+				{% if request.session.username or request.path == '/signin'%}
+
+
+<div class='wrapper'>
+		<label>Title:</label>&nbsp;&nbsp;<input id='title' value="" class='basic' type='text'>
+&nbsp;&nbsp;<button id='write' class="btn submit-btn">Make New Note</button>
+&nbsp;&nbsp;<button id='save' class="btn submit-btn">Save Note</button><br><br />
+<div class='notewrapper' id='notes'>
+<textarea id="area2" style="width: 500px; height: 400px;">
+</textarea>
+</div>
+<br />
+</div>
+
+</div>
+<div class="col-md-3 content">
+<div id="notelist">
+<div class="feed-header text-center">MY NOTES</div><br />	
+    {%if notes %}
+    {% for note in notes %}
+
+    <div class='savednote' id="{{note.id}}">
+    {{note.title}}
+    </div>
+    {% endfor %}
+    {% else %}
+    <h1>You don't have any notes yet!</h1>
+    {% endif%}
+</div>
+
+</div>
+				{% else %}
+				<h2>Login or create an account</h2><br />
+				What's your name?<br>
+					<form action='/signin'>
+							<input type='text' name='name'>
+							<input type='submit' class="btn" value='Go'>
+					</form>
+					{% endif %}
+	</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
