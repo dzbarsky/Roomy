@@ -20,6 +20,7 @@ def signin(request):
 def logout(request):
     try:
         del request.session['username']
+        del request.session['houseName']
     except KeyError:
         pass
     return render(request, 'Roomy/index.html')
@@ -119,7 +120,7 @@ def newHouse(request):
 def viewHouse(request):
     house = House.objects.get(name=request.session['houseName'])
     users = User.objects.filter(house=house.id)
-    return render(request, 'Roomy/viewHouse.html', {'users':users})
+    return render(request, 'Roomy/viewHouse.html', {'users':users, 'house': house})
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))

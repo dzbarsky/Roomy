@@ -9,9 +9,8 @@
 
 {% block content %}
 {% if request.session.username %}
-Welcome to Roomy, {{ request.session.username }}!
+<h4>Welcome to Roomy, {{ request.session.username }}!</h4>
 <br />{% endif %}
-<br />
 <div>
   <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>

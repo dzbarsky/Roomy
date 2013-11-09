@@ -18,12 +18,13 @@
     <!-- Custom styles for this template -->
     <link href="/static/css/template.css" rel="stylesheet">
 
-	<!-- webkit fonts -->
+	<!-- webkit fonts 
 	<script type="text/javascript" src="//use.typekit.net/ykk1qod.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	-->
 
 	<!-- google web fonts -->
-	<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Lato:400,700|Merriweather+Sans:400,300,700' rel='stylesheet' type='text/css'>
 
 	{% block scripts %}{% endblock %}
 
@@ -61,7 +62,7 @@
 				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
 				  <li {% if request.path == '/chores/' %} class="active"{% endif %}><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
 				  <li {% if request.path == '/charge/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
-				  {% if request.session.username %}<p class="navbar-text" id="welcome">Welcome, {{ request.session.username}}<a href="/logout/" style="font-size: 10px;">(logout){% endif %}</a></p>
+				  {% if request.session.username %}<p class="navbar-text" id="welcome">Welcome, {{ request.session.username}}!<a href="/logout/" style="font-size: 10px;">(logout){% endif %}</a></p>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
