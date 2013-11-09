@@ -102,3 +102,10 @@ body {
 h2 {
 		font-family: 'Lato';
 }
+
+#charge-btn {
+		text-transform: uppercase;
+		font-family: 'Lato';
+		font-weight: bold;
+		font-size: 14px;
+}

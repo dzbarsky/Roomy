@@ -35,7 +35,7 @@ function createLink()
   note = document.getElementById("note").value;
   url += "&note=" + note;
 
-  $.post('charge', {'note': note, 'amount': amount, 'users': ids}, function() {
+  $.post('/doCharge', {'note': note, 'amount': amount, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
   alert("Here's your url: " + url);
@@ -48,6 +48,8 @@ function createLink()
 {% block content %}
 
 <h2>New charge</h2>
+<br />
+
 
 <form class=".form-horizontal">
 		<div class="control-group">
@@ -74,7 +76,8 @@ function createLink()
 		<br />
 		<div class="control-group">
 				<div class="controls">
-						<button type="submit" class="btn" onclick="javascript:createLink();">Charge</button>
+						<button id="charge-btn" type="submit" class="btn btn-lg" style="background-color: rgb(3, 213, 3);" onclick="javascript:createLink();" id="charge_submit">
+						CHARGE</button>
 				</div>
 		</div>
 </form>
