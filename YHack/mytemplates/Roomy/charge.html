@@ -1,19 +1,19 @@
 <html>
 <head>
-<script>
+<script type="text/javascript">
 
 function createLink()
 {
   var url = "https://venmo.com/?txn=charge&recipients=";
-    amount=23.25&note=for+dinner&
-      hamilton@venmo.com,646.863.9557,john
-
-  var userCheckBoxes = document.querySelector("#users > input");
+  var userCheckBoxes = document.querySelectorAll("#users > input");
+  alert(userCheckBoxes);
   var peoplePaying = 0;
-  for (var i = 0; i < usersCheckBoxes.length; i++) {
+  for (var i = 0; i < userCheckBoxes.length; i++) {
+    alert(userCheckBoxes[i]);
+    alert(userCheckBoxes[i].checked);
     if (userCheckBoxes[i].checked) {
       peoplePaying++;
-      url += userCheckBoxes.nextSibling.getAttribute("data-phone") + ",";
+      url += userCheckBoxes[i].nextSibling.nextSibling.getAttribute("data-phone") + ",";
     }
   }
 
@@ -23,7 +23,7 @@ function createLink()
   }
 
   // Strip the trailing comma.
-  url = url.substring(0, url.length() - 1);
+  url = url.substring(0, url.length - 1);
 
   amount = document.getElementById("amount").textContent / peoplePaying;
   url += "&amount=" + amount;
@@ -37,15 +37,17 @@ function createLink()
 </head>
 <body>
 
-<form id="users">
+<form>
   How much to charge? <input id="amount" value="$0.00"> <br>
   For what? <input id="note"> <br>
-{% for user in users %}
-  <input type="checkbox" checked>
-  <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
-    {{ user.name }}
-  </div>
-{% endfor %}
+  <div id="users">
+  {% for user in users %}
+    <input type="checkbox" checked>
+    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
+      {{ user.name }}
+    </div>
+  {% endfor %}
+</div>
 <input type="submit" onclick="javascript:createLink();">
 </form>
 </body>
