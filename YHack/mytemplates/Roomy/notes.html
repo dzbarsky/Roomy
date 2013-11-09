@@ -77,9 +77,8 @@ $(document).on('click', '#save', function() {
     var noteData = {},
         title = document.getElementById("title").value,
         content = nicEditors.findEditor('area2').getContent();
-    noteData['title']=title,
-    noteData['content']=content,
-    noteData['house']=1;
+    noteData['title']=title;
+    noteData['content']=content;
     var title = "";
     var id = -1;
     $.post('/savedNotes', noteData, function(response) {

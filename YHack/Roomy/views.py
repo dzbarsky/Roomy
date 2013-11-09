@@ -150,8 +150,6 @@ def savedNotes(request):
     response = HttpResponse()
     title=request.POST['title']
     content=request.POST['content']
-
-    
     existing = Note.objects.filter(title=title)
     if existing.count() > 0:
         note = Note.objects.get(title=title)
@@ -160,21 +158,16 @@ def savedNotes(request):
         response['title'] = title
         response['id'] = note.id
         response['content'] = content
-        print response
-
         data = json.dumps({'title': title, 'id': note.id, 'content': content})
         return HttpResponse(data, content_type="application/json")
 
-    house=request.POST['house']
-    house_object = House.objects.get(id=house)
+    house=request.session['houseName']
+    house_object = House.objects.get(name=house)
     note = Note(title=title, content=content, house=house_object)
     note.save()
     response['title'] = title
     response['id'] = note.id
     response['content'] = content
-    
-    print response
- 
     data = json.dumps({'title': title, 'id': note.id, 'content': content})
     return HttpResponse(data, content_type="application/json")
 
@@ -184,17 +177,19 @@ def getNotes(request):
     notes = []
     house=request.session['houseName']
     houseObj = House.objects.get(name=house)
-    if Note.objects.filter(house=houseObj).count() > 1:
-        for note in Note.objects.filter(houseObj):
-            notes.append(note)
-    elif Note.objects.filter(house=houseObj).count() > 0:
-            notes.append(Note.objects.filter(house=houseObj))
+    for note in Note.objects.filter(house=houseObj.id):
+        notes.append(note)
+    #if Note.objects.filter(house=houseObj).count() > 1:
+     #   for note in Note.objects.filter(houseObj):
+     #       notes.append(note)
+    #elif Note.objects.filter(house=houseObj).count() > 0:
+    #    notes.append(Note.objects.get(house=houseObj))
     for note in Note.objects.filter(id__lte=2):
         notes.append(note)
     return notes
 
 def notes(request):
-    return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request) }))
+    return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request), 'houseName': request.session['houseName'] }))
 
 def textReminder(recipient, message):
     if len(recipient) != 10:
