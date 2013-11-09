@@ -56,6 +56,9 @@ def getParams(request):
 def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
 
+def view404(request):
+    return render(request, '404.html', getParams(request))
+
 def createHouse(request):
     return render(request, 'Roomy/createHouse.html', getParams(request))
 
