@@ -88,6 +88,12 @@ def addChore(request):
     chore.save()
     return HttpResponse()
 
+def base(request):
+    user = User.objects.get(name=request.session['username'])
+    house = user.house
+    houseName = house.name
+    return HttpResponse()
+
 def newHouse(request):
     user = User.objects.get(name=request.session['username'])
     data = json.loads(request.POST['houseData'])
