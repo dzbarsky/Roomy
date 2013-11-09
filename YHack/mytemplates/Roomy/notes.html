@@ -6,17 +6,16 @@
 
 
 <div class='wrapper' style'float:left; width:100%;'>
-Title<input id='title' value="Note title" class='basic' type='text'><br>
-<button id='write'><b>Make Note</b></button><br>
-<div class='notewrapper'id='notes' style="display:none; margin-right:200px;">
+Title<input id='title' value="" class='basic' type='text'><br>
+<button id='write'><b>Make New Note</b></button><br>
+<div class='notewrapper'id='notes' style="margin-right:200px;">
 <textarea id="area2" style="width: 300px; height: 300px;">
-	Fill in this content
 </textarea>
 </div>
-<button id='save' style="display:none"><b>Save Note</b></button><br>
+<button id='save'><b>Save Note</b></button><br>
 </div>
 
-<div style="float:left; float:top; width:200px; margin-left:400px;">
+<div id='notelist' style="float:left; float:top; width:200px; margin-left:400px;">
     {%if notes %}
     {% for note in notes %}
 
@@ -25,7 +24,7 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
     </div>
     {% endfor %}
     {% else %}
-    <h1>no notes in database</h1>
+    <h1 id='nonestatement'>no notes in database</h1>
     {% endif%}
 </div>
 
@@ -42,45 +41,110 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
 </script>
 <script>
 var java_notes = [];
-$(document).ready(function() {
+window.addEventListener("load", ready);
+
+function ready()
+{
     {% for note in notes %}
         var jnote = {};
         jnote['id'] = {{note.id}}; 
         jnote['title'] = "{{note.title}}";      
         jnote['content'] = "{{note.content}}";
+        jnote['db'] = 1;
         java_notes[{{note.id}}] = jnote;
     {% endfor %}
-    console.log(java_notes);
-})
+    if (java_notes.length > 0){
+        for(var i = 0; i < java_notes.length; i++){
+            if(java_notes[i]){
+                console.log(java_notes[i]);
+                var content = java_notes[i].content;
+                var decoded = $("<div/>").html(content).text();
+                nicEditors.findEditor('area2').setContent(decoded);
+                var title = java_notes[i].title;
+                var $x = $("input");
+                $x.prop("value", title);
+                break;
+            }
+        }
+        
+        
+    }
+    else{
+        nicEditors.findEditor('area2').setContent("");
+        var $x = $("input");
+        $x.prop("value", "");
+    }
+}
+
 $(document).on('click', '#write', function() {
-    $('#notes').toggle();
-    $('#save').toggle();
+    var $x = $("input");
+    $x.prop("value", "New Title");
+    nicEditors.findEditor('area2').setContent("");
 });
 $(document).on('click', '#save', function() {
-    var noteData = {}
-    title = document.getElementById("title").value;
-    content = nicEditors.findEditor('area2').getContent();
-    noteData['title']=title;
-    noteData['content']=content;
+    var noteData = {},
+        title = document.getElementById("title").value,
+        content = nicEditors.findEditor('area2').getContent();
+    noteData['title']=title,
+    noteData['content']=content,
     noteData['house']=1;
-    $.post('/savedNotes', noteData, function() {
-        alert('success!');
+    var title = "";
+    var id = -1;
+    $.post('/savedNotes', noteData, function(response) {
+        title = response['title'];
+        id = response['id'];
+        content = response['content'];
+       
+        $('#nonestatement').hide();
+        var jnote = {};
+        console.log(java_notes[id]);
+        if(java_notes[id]){
+            alert("fuck with me");
+            java_notes[id].content = content;
+            java_notes[id].db = 0;
+            console.log(java_notes[id]);
+        }
+        else{
+            jnote['id'] = id;
+            jnote['title'] = title;
+            jnote['content'] = content;
+            jnote['db'] = 0;
+            java_notes[id] = jnote;
+            var newNote = "<div class='savednote' id="+id+">"+title+"</div>";
+            $('#notelist').append(newNote);
+        }   
+        console.log(java_notes);
+        alert('success!' + id + title);        
     });
+
 });
 
 $(document).on('click', '.savednote', function(){
     
     var id = $(this).attr('id');
-    note = java_notes[id];
-    content = note['content'];
-    // for note in java_notes:
-    //     if id == note.id:
-    //         content = note.content;
-    nicEditors.findEditor('area2').setContent(content);
+    var note = java_notes[id];
+    console.log(note);
+    if (note['db'] == 1){
+        var content = (note['content']);
+        var decoded = $("<div/>").html(content).text();
+    }
+    else{
+        var decoded = note['content'];
+    }
+    var title = note['title'];
+    var $x = $("input");
+    $x.prop("value", title);
+    
+    // console.log(title);
+    // $('#title').attr('value', title);
+    
+    nicEditors.findEditor('area2').setContent(decoded);
+    
     $('#notes').show();
     $('#save').show();
-
+ 
 })
+
 </script>
 
 {% endblock %}

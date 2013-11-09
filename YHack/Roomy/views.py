@@ -138,14 +138,37 @@ def lists(request):
     return render(request, 'Roomy/lists.html', getParams(request))
 
 def savedNotes(request):
+    response = HttpResponse()
     title=request.POST['title']
     content=request.POST['content']
+
+    
+    existing = Note.objects.filter(title=title)
+    if existing.count() > 0:
+        note = Note.objects.get(title=title)
+        note.content = content
+        note.save()
+        response['title'] = title
+        response['id'] = note.id
+        response['content'] = content
+        print response
+
+        data = json.dumps({'title': title, 'id': note.id, 'content': content})
+        return HttpResponse(data, content_type="application/json")
+
     house=request.POST['house']
 
     house_object = House.objects.get(id=house)
     note = Note(title=title, content=content, house=house_object)
     note.save()
-    return HttpResponse()
+    response['title'] = title
+    response['id'] = note.id
+    response['content'] = content
+    
+    print response
+ 
+    data = json.dumps({'title': title, 'id': note.id, 'content': content})
+    return HttpResponse(data, content_type="application/json")
 
 def getNotes(request):
     notes = []
