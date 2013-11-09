@@ -10,13 +10,14 @@
 {% block content %}
 {% if request.session.username %}
 Welcome to Roomy, {{ request.session.username }}!
-{% endif %}
-
+<br />{% endif %}
+<br />
 <div>
   <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>
 <div id="colorholder"></div>
-<button onclick="javascript:clearCanvas()">Clear</button>
+<Br />
+<button onclick="javascript:clearCanvas()" class="btn">Clear</button>
 <script>
 //Create a reference to the pixel data for our drawing.
 var pixelDataRef = new Firebase('https://roomy-{{ request.session.houseName }}.firebaseio-demo.com/');
