@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Roomy: Chores{% endblock %}
+{% block title %}Roomy: Notes{% endblock %}
 
 {% block content %}
 
@@ -35,14 +35,13 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
 
 {% block scripts %}
 
-<script type="text/javascript" src="/static/js/jquery.min.js" </script>
+<script src="/static/js/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="/static/js/nicEdit.js"></script>
 <script type="text/javascript">
 	bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });
 </script>
 <script>
 var java_notes = [];
-var curr_title = "";
 $(document).ready(function() {
     {% for note in notes %}
         var jnote = {};
@@ -56,12 +55,10 @@ $(document).ready(function() {
 $(document).on('click', '#write', function() {
     $('#notes').toggle();
     $('#save').toggle();
-    curr_title = document.getElementById("title").value;
 });
 $(document).on('click', '#save', function() {
     var noteData = {}
-        title = document.getElementById("title").value;
-
+    title = document.getElementById("title").value;
     content = nicEditors.findEditor('area2').getContent();
     noteData['title']=title;
     noteData['content']=content;
@@ -76,7 +73,6 @@ $(document).on('click', '.savednote', function(){
     var id = $(this).attr('id');
     note = java_notes[id];
     content = note['content'];
-    curr_title = note['title'];
     // for note in java_notes:
     //     if id == note.id:
     //         content = note.content;
