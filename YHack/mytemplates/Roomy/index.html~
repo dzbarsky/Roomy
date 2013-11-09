@@ -1,4 +1,2 @@
-{% extends "base.html" %}
-
 WELCOME TO ROOMY
 <a href="/charge"> Click on me to charge people! </a>
