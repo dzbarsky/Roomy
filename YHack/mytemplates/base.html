@@ -73,7 +73,10 @@
 			<br />
       {% for charge in charges %}
         <div class='feed-item'>
-          {{ charge.note }}, {{ charge.amount }}
+          {{ charge.note }}, {{ charge.amount }},
+          {% for user in charge.users.all %}
+            {{ user.name }}
+          {% endfor %}
         </div>
       {% endfor %}
  			<div class="feed-item">Charge 1</div>
