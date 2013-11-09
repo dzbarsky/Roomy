@@ -10,6 +10,9 @@ def index(request):
 def createHouse(request):
     return render(request, 'Roomy/createHouse.html')
 
+def createUser(request):
+	return render(request, 'Roomy/newuser.html')
+
 def newUser(request):
     name = request.POST['name']
     email = request.POST['email']
