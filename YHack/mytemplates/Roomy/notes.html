@@ -70,7 +70,7 @@ function ready()
 
 $(document).on('click', '#write', function() {
     var $x = $("input");
-    $x.prop("value", "New Title");
+    $x.prop("value", "").attr('placeholder','Groceries');
     nicEditors.findEditor('area2').setContent("");
 });
 $(document).on('click', '#save', function() {
@@ -187,7 +187,7 @@ $(document).on('click', '.savednote', function(){
 
 
 <div class='wrapper'>
-		<label>Title:</label>&nbsp;&nbsp;<input id='title' value="" class='basic' type='text'>
+		<label>Title:</label>&nbsp;&nbsp;<input id='title' value="" class='basic' type='text' placeholder='Groceries'>
 &nbsp;&nbsp;<button id='write' class="btn submit-btn">Make New Note</button>
 &nbsp;&nbsp;<button id='save' class="btn submit-btn">Save Note</button><br><br />
 <div class='notewrapper' id='notes'>
