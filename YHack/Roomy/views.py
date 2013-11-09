@@ -38,8 +38,9 @@ def getCharges(request):
     return charges
 
 
-def getUsers():
-    return [user for user in User.objects.all()]
+def getUsers(request):
+    house = House.objects.get(name=request.session['houseName'])
+    return [user for user in User.objects.filter(house=house.id)]
 
 def getChores(request):
     chores = []
@@ -55,7 +56,7 @@ def getChores(request):
 
 def getParams(request):
     return {'charges': getCharges(request),
-            'users': getUsers(),
+            'users': getUsers(request),
             'chores': getChores(request),
             'notes': getNotes(request)}
 
@@ -117,13 +118,7 @@ def newHouse(request):
     return render(request, 'Roomy/index.html')
 
 def viewHouse(request):
-    house = House.objects.get(name=request.session['houseName'])
-    users = [user for user in User.objects.filter(house=house.id)]
-
-    return render(request, 'Roomy/viewHouse.html', {'users':users,
-                                                    'house': house,
-                                                    'charges': getCharges(request),
-                                                    'chores': getChores(request)})
+    return render(request, 'Roomy/viewHouse.html', getParams(request))
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
