@@ -1,0 +1,33 @@
+body {
+  padding-top: 50px;
+  font-family: "museo-sans", sans-serif;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.navbar-custom {
+	background-color: #D3D3D3;
+	border: none;
+}
+
+.navbar-inverse .navbar-brand {
+	color: #383838;
+}
+
+.navbar-inverse .navbar-brand:hover{
+	color: blue;
+}
+
+.navbar-inverse .navbar-nav > .active > a{
+	background-color: #B5B5B5;
+}
+
+.navbar-inverse .navbar-nav > .active > a:hover{
+	background-color: gray;
+}
+
+.navbar-inverse .navbar-nav:hover{
+	color: #383838;	
+}

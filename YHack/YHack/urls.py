@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'YHack.views.home', name='home'),
     # url(r'^YHack/', include('YHack.foo.urls')),
 
+    url(r'', include('Roomy.urls'))
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
