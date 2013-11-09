@@ -15,7 +15,7 @@ WELCOME TO ROOMY
 <script>
 $('#submit').click(function() {
     var users = { name: $('input[name=name]').val(), email: $('input[name=email]').val(), phone: $('input[name=phone]').val() };
-    $.post('newUser', users, function() {
+    $.post('/newUser', users, function() {
 	alert('success!');
     });
 });

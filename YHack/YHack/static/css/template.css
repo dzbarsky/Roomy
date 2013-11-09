@@ -84,6 +84,7 @@ body {
 		padding-right: 0px;
 		border-left: 1px solid gray;
 		height: 400px;
+		word-wrap: break-word;
 }
 
 .feed-header{
@@ -93,6 +94,19 @@ body {
 		font-family: 'Lato';
 		font-weight: bold;
 		text-transform: uppercase;
+}
+
+.feed ul{
+		width: 275px;
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+}
+
+.feed ul li{
+		border-bottom: 1px solid gray;
+		padding-bottom: 10px;
+		padding-top: 10px;
 }
 
 .content {

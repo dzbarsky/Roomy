@@ -71,17 +71,20 @@
 			{% block feed %}{% endblock %}
 			<div class="text-center feed-header">My Charges</div>
 			<br />
-      {% for charge in charges %}
-        <div class='feed-item'>
-          {{ charge.note }}, {{ charge.amount }},
-          {% for user in charge.users.all %}
-            {{ user.name }}
-          {% endfor %}
-        </div>
-      {% endfor %}
- 			<div class="feed-item">Charge 1</div>
-			<div class="feed-item">Charge 2</div>
-			<div class="feed-item">Charge 3</div>
+			<ul>
+					{% for charge in charges %}
+					<li {% if forloop.first %}style="padding-top: none;" {% elif forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
+					<span class="glyphicon glyphicon-usd"></span>
+							{% for user in charge.users.all %}
+									{% if forloop.last %}
+											{{ user.name }}
+									{% else %}
+											{{ user.name }}, 
+									{% endif %}
+							{% endfor %}
+							were charged ${{ charge.amount }} for {{charge.note}}
+					</li>
+					{% endfor %}
 			<br />
 			<div class="text-center feed-header">My Chores</div>
 			<br />
