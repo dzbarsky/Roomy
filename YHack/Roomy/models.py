@@ -26,7 +26,7 @@ class Chore(models.Model):
     name=models.CharField(max_length=140)
     users=models.ManyToManyField(User)
     frequency=models.CharField(max_length=20) 
-    days=models.ManyToManyField(Day)
+    day=models.ForeignKey('Day', null=True)
 
 class Note(models.Model):
     title=models.CharField(max_length=100)

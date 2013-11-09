@@ -91,14 +91,17 @@ def addChore(request):
     name = request.POST['name']
     frequency = request.POST['frequency']
     day = request.POST['day']
+    dayModel = Day.objects.get(full=day)
     users = request.POST['users']
     users = [user for user in User.objects.all() if str(user.id) in users]
-    chore = Chore(name=name, frequency=frequency, day=day)
+    chore = Chore(name=name, frequency=frequency, day=dayModel)
     chore.save()
     for user in users:
       chore.users.add(user)
     chore.save()
-    textReminder('8477089465',chore.name)
+    message = "You've taken on a new chore: " + chore.name + " - " + chore.frequency + "!"
+    for user in users:
+        textReminder(user.phone, message)
     return HttpResponse()
 
 def newHouse(request):
@@ -162,8 +165,9 @@ def notes(request):
     return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request) }))
 
 def textReminder(recipient, message):
-    #recipient = request.POST['recipient']
-    #message = request.POST['message']
+    if len(recipient) != 10:
+       print 'Invalid number'
+       return 
     account_sid = "AC0e0571d94d5d6dba4ac914247086bde1"
     auth_token = "1048a4e4a412d86677011b93d0300995"
     client = TwilioRestClient(account_sid, auth_token)

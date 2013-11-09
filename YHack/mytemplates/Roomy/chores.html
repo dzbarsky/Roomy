@@ -4,6 +4,7 @@
 
 {% block scripts %}
 
+<script src='/static/js/jquery.min.js'></script>
 <script type="text/javascript">
 
 function addChore()
@@ -27,9 +28,14 @@ function addChore()
   var name = document.getElementById('name').value;
 
   $.post('/addChore', {'name': name, 'day': day, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
-    alert('success!');
+      window.location.refresh()
   });
 }
+
+$(document).on('click','input[name=frequency]',function() {
+    if ($(this).attr('value') == 'daily') $('#days').hide();
+    else $('#days').show();
+});
 
 </script>
 
@@ -65,6 +71,7 @@ function addChore()
                    <input type="radio" value="monthly" name="frequency"> Monthly<br>
                    <input type="radio" value="once" name="frequency"> Once<br>
 				   <br>
+        <div id='days'>
         Day of the Week:<br>
 			<label class="radio-inline">
 			 <input checked type="radio" value="Sunday" name="day"> S</label>
@@ -75,6 +82,7 @@ function addChore()
                          <label class="radio-inline"><input type="radio" value="Friday" name="day"> F</label>
                          <label class="radio-inline"><input type="radio" value="Saturday" name="day"> S</label>
 						 <br /><br />
+	</div>
 		   </div>
    </div>
    </form>
