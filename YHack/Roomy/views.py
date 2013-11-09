@@ -76,8 +76,10 @@ def createUser(request):
     image = request.POST['image']
     user = User(name=name, fb_uid=fb_uid, image=image)
     user.save()
+    print user
     request.session['username'] = name
     request.session['userID'] = user.id
+    print request.session['username']
     return HttpResponse()
 
 def newUser(request):
