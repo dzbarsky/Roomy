@@ -13,7 +13,12 @@ class House(models.Model):
     city=models.CharField(max_length=60)
     state=models.CharField(max_length=20)
     zipcode=models.CharField(max_length=5)
-    users=models.ManyToManyField(User)
+
+class User(models.Model):
+    name=models.CharField(max_length=100, unique=True)
+    email=models.CharField(max_length=100)
+    phone=models.CharField(max_length=40)
+    house=models.ForeignKey('House', null=True)
 
 class Charge(models.Model):
     note=models.CharField(max_length=140)
