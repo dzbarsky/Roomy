@@ -7,20 +7,23 @@ import json
 def getCharges():
     return [charge for charge in Charge.objects.all()]
 
-def getChargesDict():
-    return {'charges': getCharges()}
-
 def getUsers():
     return [user for user in User.objects.all()]
 
+def getChores():
+    return [chore for chore in Chore.objects.all()]
+
+def getParams():
+    return {'charges': getCharges(), 'users': getUsers(), 'chores': getChores()}
+
 def index(request):
-    return render(request, 'Roomy/index.html', getChargesDict())
+    return render(request, 'Roomy/index.html', getParams())
 
 def createHouse(request):
-    return render(request, 'Roomy/createHouse.html', getChargesDict())
+    return render(request, 'Roomy/createHouse.html', getParams())
 
 def createUser(request):
-    return render(request, 'Roomy/newuser.html', getChargesDict())
+    return render(request, 'Roomy/newuser.html', getParams())
 
 def newUser(request):
     name = request.POST['name']
@@ -31,8 +34,7 @@ def newUser(request):
     return HttpResponse()
 
 def chores(request):
-    return render(request, 'Roomy/chores.html', {'users': getUsers(),
-                                                 'charges': getCharges()})
+    return render(request, 'Roomy/chores.html', getParams())
 
 def addChore(request):
     name = request.POST['name']
@@ -65,8 +67,7 @@ def newHouse(request):
     return HttpResponse()
 
 def charge(request):
-    return render(request, 'Roomy/charge.html', {'users': getUsers(),
-                                                 'charges': getCharges()})
+    return render(request, 'Roomy/charge.html', getParams())
 
 def doCharge(request):
     note = request.POST['note']
@@ -81,7 +82,7 @@ def doCharge(request):
     return HttpResponse()
 
 def lists(request):
-    return render(request, 'Roomy/lists.html', getChargesDict())
+    return render(request, 'Roomy/lists.html', getParams())
 
 def notes(request):
-    return render(request, 'Roomy/notes.html', getChargesDict())
+    return render(request, 'Roomy/notes.html', getParams())

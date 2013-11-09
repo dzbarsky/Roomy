@@ -88,6 +88,21 @@
 			<br />
 			<div class="text-center feed-header">My Chores</div>
 			<br />
+			<ul>
+					{% for chore in chores %}
+					<li {% if forloop.first %}style="padding-top: none;" {% elif forloop.last %}style="padding-bottom: none; border: none;"{% endif %} >
+					<span class="glyphicon glyphicon-usd"></span>
+							{% for user in chore.users.all %}
+									{% if forloop.last %}
+											{{ user.name }}
+									{% else %}
+											{{ user.name }}, 
+									{% endif %}
+							{% endfor %}
+              must do {{ chore.name }} {{ chore.frequency }}
+					</li>
+					{% endfor %}
+			<br />
 			<div class="feed-item">Chore 1</div>
 			<div class="feed-item">Chore 2</div>
 			<div class="feed-item">Chore 3</div>
