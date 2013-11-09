@@ -20,3 +20,6 @@ def charge(request):
     for user in users:
         usersDict.append(user)
     return render(request, 'Roomy/charge.html', {'users': users})
+
+def lists(request):
+    return render(request, 'Roomy/lists.html') 
