@@ -58,4 +58,7 @@ def doCharge(request):
     return HttpResponse()
 
 def lists(request):
-    return render(request, 'Roomy/lists.html') 
+    return render(request, 'Roomy/lists.html')
+
+def notes(request):
+    return render(request, 'Roomy/notes.html')

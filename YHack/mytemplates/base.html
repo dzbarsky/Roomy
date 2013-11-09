@@ -49,11 +49,11 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-				  <li {% if request.path == '/home' %} class="active"{% endif %}>
+				  <li {% if request.path == '/' %} class="active"{% endif %}>
 				  <a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;HOME</a></li>
-				  <li {% if request.path == 'active' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
-				  <li><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
-				  <li {% if request.path == '/charges/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
+				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
+				  <li {% if request.path == '/chores/' %} class="active"{% endif %}><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
+				  <li {% if request.path == '/charge/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -65,7 +65,7 @@
 
 	<div class="row">
 
-			<div class="col-md-4 content">{% block content %}{% endblock %}{{ request.path }}</div>
+			<div class="col-md-4 content">{% block content %}{% endblock %}</div>
 	  
 	<div class="col-md-4 col-md-offset-4 feed">
 			{% block feed %}{% endblock %}
