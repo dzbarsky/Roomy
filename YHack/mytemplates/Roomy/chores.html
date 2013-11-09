@@ -8,7 +8,7 @@
 
 function addChore()
 {
-  var userCheckBoxes = document.querySelectorAll("#users > input");
+  var userCheckBoxes = document.querySelectorAll("#users input");
   var ids = [];
   for (var i = 0; i < userCheckBoxes.length; i++) {
     if (userCheckBoxes[i].checked) {
@@ -18,16 +18,14 @@ function addChore()
   }
 
   if (ids.length == 0) {
-    alert("Nobody paying you?  What?");
+    alert("Nobody doing the chore?  What?");
     return;
   }
 
   var frequency = $('input[name=frequency]:checked').val();
-  var rotates = $('input[name=rotates]:checked').val();
-
   var name = document.getElementById('name').value;
 
-  $.post('/addChore', {'name': name, 'frequency': frequency, 'rotates': rotates, 'users': JSON.stringify(ids)}, function() {
+  $.post('/addChore', {'name': name, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
 }
@@ -38,27 +36,31 @@ function addChore()
 
 {% block content %}
 
-<h2>Chores</h2>
-
-Chore <input id="name"> <br>
-People
+<h2>New Chore</h2>
+<br />
+<form class=".form-horizontal">
+<div class="control-group">
+		<label class="control-label" for="name">Name</label>
+<div class="controls">
+		<input id="name" type="text"></div></div>
 		<div id="users" class="controls">
 				{% for user in users %}
+				<div class="checkbox">
+						<label>
 				<input type="checkbox">
 				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
 						{{ user.name }}
-				</div>
+</div></label></div>
 				{% endfor %}
-     </div>
-        <br>
+		<div class="control-group">
+				<div class="controls">
         Frequency: Daily <input checked type="radio" value="daily" name="frequency">
                    Weekly <input type="radio" value="weekly" name="frequency">
                    Monthly <input type="radio" value="monthly" name="frequency">
                    Once <input type="radio" value="once" name="frequency">
-                   <br>
-        Rotates? Yes <input checked type="radio" value="yes" name="rotates">
-                 No <input type="radio" value="no" name="rotates">
-                 <br>
+				   <br><br />
+		   </div>
+   </div>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
               style="background-color: rgb(114, 218, 114);"
               onclick="javascript:addChore();" id="chore_submit">

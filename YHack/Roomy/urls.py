@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     url(r'^chores\/$', views.chores, name='chores'),
     url(r'^createUser\/$', views.createUser, name='createUser'),
     url(r'^addChore$', views.addChore, name='addChore'),
+    url(r'^signin$', views.signin, name='signin'),
 )
