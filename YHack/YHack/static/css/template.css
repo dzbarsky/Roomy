@@ -19,6 +19,7 @@ h2 {
 		font-family: "Lato";
 		background-color: #404040;
 		border: none;
+		opacity: .98;
 }
 
 .navbar-nav a {
@@ -139,9 +140,29 @@ h2 {
 		font-family: 'Lato';
 }
 
-#charge-btn {
+#charge-btn{
 		text-transform: uppercase;
 		font-family: 'Lato';
 		font-weight: bold;
 		font-size: 14px;
+}
+
+#chore_submit{
+		text-transform: uppercase;
+		font-family: 'Lato';
+		font-weight: bold;
+		font-size: 14px;
+}
+
+.submit-btn{
+		text-transform: uppercase;
+		font-family: 'Lato';
+		font-weight: bold;
+		font-size: 14px;
+}
+
+#whiteboard-title{
+		font-family: 'Permanent Marker';
+		font-weight: bold;
+		font-size: 28px;
 }

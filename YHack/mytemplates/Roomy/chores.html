@@ -43,18 +43,19 @@ function addChore()
 <div class="control-group">
 		<label class="control-label" for="name">Name</label>
 <div class="controls">
-		<input id="name" type="text">
-  </div>
-</div>
-		<div id="users" class="controls">
+		<input id="name" type="text"></div></div>
+    <div class="controls">
+		<div id="users">
 				{% for user in users %}
 				<div class="checkbox">
 						<label>
 				<input type="checkbox">
 				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
+				<span class="glyphicon glyphicon-user"></span>&nbsp;
 						{{ user.name }}
 </div></label></div>
 				{% endfor %}
+      </div>
 				<br />
 		<div class="control-group">
 				<div class="controls">
@@ -65,23 +66,21 @@ function addChore()
                    <input type="radio" value="once" name="frequency"> Once<br>
 				   <br>
         Day of the Week:<br>
-			 <input checked type="radio" value="Monday" name="day"> S<br>
-                         <input type="radio" value="Tuesday" name="day"> M<br>
-                         <input type="radio" value="Wednesday" name="day"> T<br>
-                         <input type="radio" value="Thursday" name="day"> W<br>
-                         <input type="radio" value="Friday" name="day"> R<br>
-                         <input type="radio" value="Saturday" name="day"> F<br>
-                         <input type="radio" value="Sunday" name="day"> S<br>
-				   <br><br />
+			<label class="radio-inline">
+			 <input checked type="radio" value="Sunday" name="day"> S</label>
+                         <label class="radio-inline"><input type="radio" value="Monday" name="day"> M</label>
+                         <label class="radio-inline"><input type="radio" value="Tuesday" name="day"> T</label>
+                         <label class="radio-inline"><input type="radio" value="Wednesday" name="day"> W</label>
+                         <label class="radio-inline"><input type="radio" value="Thursday" name="day"> R</label>
+                         <label class="radio-inline"><input type="radio" value="Friday" name="day"> F</label>
+                         <label class="radio-inline"><input type="radio" value="Saturday" name="day"> S</label>
+						 <br /><br />
 		   </div>
    </div>
-						<button id="chore-btn" type="submit" class="btn btn-lg"
-						<button id="chore-btn" type="submit" class="btn btn-lg"
-              style="background-color: rgb(114, 218, 114);"
-              onclick="javascript:addChore();" id="chore_submit">
-						Add Chore!</button>
-      </div>
-</form>
+   </form>
+						<button class="btn btn-lg" style="background-color: rgb(114, 218, 114);" onclick="javascript:addChore();" id="chore_submit">
+						ADD CHORE</button>
+				</div>
 	
 	{% endblock %}
 

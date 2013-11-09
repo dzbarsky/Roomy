@@ -10,7 +10,13 @@
 {% for user in users %}
 <li><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.name }}
 <span style="font-size: 13px; text-indent: 20px;">({{ user.phone }})</span></li>
+<ul>
+  {% for chore in chores %}
+    {% if user in chore.users.all %}
+	<li> {{ chore.name }} </li><br />
+    {% endif %}
+  {% endfor %}
 {% endfor %}
-
+</ul>
 
 {% endblock %}

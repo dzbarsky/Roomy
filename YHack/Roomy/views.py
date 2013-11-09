@@ -11,8 +11,9 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
-        house = user.house
-        request.session['houseName'] = house.name
+        if user.house:
+            house = user.house
+            request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
         return createUser(request)
@@ -37,9 +38,12 @@ def getCharges(request):
                 continue
     return charges
 
-
-def getUsers():
-    return [user for user in User.objects.all()]
+def getUsers(request):
+    users = []
+    if 'houseName' not in request.session:
+        return users
+    house = House.objects.get(name=request.session['houseName'])
+    return [user for user in User.objects.filter(house=house.id)]
 
 def getChores(request):
     chores = []
@@ -55,7 +59,7 @@ def getChores(request):
 
 def getParams(request):
     return {'charges': getCharges(request),
-            'users': getUsers(),
+            'users': getUsers(request),
             'chores': getChores(request),
             'notes': getNotes(request)}
 
@@ -99,7 +103,6 @@ def addChore(request):
 
 def newHouse(request):
     user = User.objects.get(name=request.session['username'])
-    print user
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
         number=data['stnumber'], \
@@ -121,7 +124,7 @@ def newHouse(request):
 def viewHouse(request):
     house = House.objects.get(name=request.session['houseName'])
     users = User.objects.filter(house=house.id)
-    return render(request, 'Roomy/viewHouse.html', {'users':users, 'house': house})
+    return render(request, 'Roomy/viewHouse.html', dict(getParams(request), **{'house': house, 'users': users}))
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))

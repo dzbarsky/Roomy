@@ -9,14 +9,14 @@
 
 {% block content %}
 {% if request.session.username %}
-<h4>Welcome to Roomy, {{ request.session.username }}!</h4>
-<br />{% endif %}
+<!-- <h4>Welcome to Roomy, {{ request.session.username }}!</h4> -->
+{% endif %}
+<div id="whiteboard-title" class="text-center">{% if request.session.houseName %}{{ request.session.houseName }}{% else %}House{% endif %} Whiteboard</div><br />
 <div>
   <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>
 <div id="colorholder"></div>
-<Br />
-<button onclick="javascript:clearCanvas()" class="btn">Clear</button>
+<button id="clear-button" onclick="javascript:clearCanvas()" class="btn">Clear</button>
 <script>
 //Create a reference to the pixel data for our drawing.
 var pixelDataRef = new Firebase('https://roomy-{{ request.session.houseName }}.firebaseio-demo.com/');
