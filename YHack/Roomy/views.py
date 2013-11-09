@@ -34,6 +34,16 @@ def chores(request):
     return render(request, 'Roomy/chores.html', {'users': getUsers(),
                                                  'charges': getCharges()})
 
+def addChore(request):
+    '''
+    name = request.POST['name']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    user = User(name=name, email=email, phone=phone)
+    user.save()
+    '''
+    return HttpResponse()
+
 def newHouse(request):
     name = request.POST['name']
     number = request.POST['number']
