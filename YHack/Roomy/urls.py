@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^createHouse\/$', views.createHouse, name='createHouse'),
     url(r'^charge\/$', views.charge, name='charge'),
     url(r'^chores\/$', views.chores, name='chores'),
+	url(r'^createUser\/$', views.createUser, name='createUser')
 )

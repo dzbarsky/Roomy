@@ -47,19 +47,41 @@ function createLink()
 
 {% block content %}
 
-<form>
-  How much to charge? <input id="amount" value="$0.00"> <br>
-  For what? <input id="note"> <br>
-  <div id="users">
-  {% for user in users %}
-    <input type="checkbox" checked>
-    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
-      {{ user.name }}
-    </div>
-  {% endfor %}
-</div>
-<input type="submit" onclick="javascript:createLink();">
+<h2>New charge</h2>
+<br />
+
+
+<form class=".form-horizontal">
+		<div class="control-group">
+				<label class="control-label" for="amount">Amount</label>
+		<div class="controls">
+				<input type="text" id="amount" placeholder="$0.00">
+		</div>
+		</div>
+		<br />
+		<div class="control-group">
+				<label class="control-label" for="note">for</label>
+		<div class="controls">
+				<input type="text" id="note" placeholder="Message">
+		</div>
+		</div>
+
+		<div id="users" class="controls">
+				{% for user in users %}
+				<input type="checkbox" checked>
+				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
+						{{ user.name }}
+				</div>
+				{% endfor %}
+		<br />
+		<div class="control-group">
+				<div class="controls">
+						<button type="submit" class="btn" onclick="javascript:createLink();">Charge</button>
+				</div>
+		</div>
 </form>
+<br />
+</div>
 
 {% endblock %}
 
