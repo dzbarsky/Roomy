@@ -103,7 +103,8 @@ def newHouse(request):
         newUser = User(name=user['username'],email=user['email'],phone=user['phone'])
         newUser.save()
         house.users.add(newUser)
-    return HttpResponse()
+	request.session['houseName'] = data['name']
+    return render(request, 'Roomy/index.html')
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))

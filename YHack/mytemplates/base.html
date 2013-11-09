@@ -48,6 +48,7 @@
 		  <a class="navbar-brand" href="/">
 				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
 				  <span style="font-weight: bold;">Roomy</span></a>
+		  {% if request.session.houseName %}&nbsp;&nbsp;&nbsp;<p class="navbar-text" style="font-size: 16px;">{{ request.session.houseName }}</p>{% endif %}
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
