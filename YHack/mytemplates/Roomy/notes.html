@@ -60,8 +60,8 @@ $(document).on('click', '#write', function() {
 });
 $(document).on('click', '#save', function() {
     var noteData = {}
-    if (curr_title.equals(""))
         title = document.getElementById("title").value;
+
     content = nicEditors.findEditor('area2').getContent();
     noteData['title']=title;
     noteData['content']=content;
