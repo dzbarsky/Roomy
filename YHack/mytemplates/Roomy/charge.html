@@ -1,16 +1,15 @@
-<html>
-<head>
+{% extends "base.html" %}
+
+{% block scripts %}
+
 <script type="text/javascript">
 
 function createLink()
 {
   var url = "https://venmo.com/?txn=charge&recipients=";
   var userCheckBoxes = document.querySelectorAll("#users > input");
-  alert(userCheckBoxes);
   var peoplePaying = 0;
   for (var i = 0; i < userCheckBoxes.length; i++) {
-    alert(userCheckBoxes[i]);
-    alert(userCheckBoxes[i].checked);
     if (userCheckBoxes[i].checked) {
       peoplePaying++;
       url += userCheckBoxes[i].nextSibling.nextSibling.getAttribute("data-phone") + ",";
@@ -25,17 +24,19 @@ function createLink()
   // Strip the trailing comma.
   url = url.substring(0, url.length - 1);
 
-  amount = document.getElementById("amount").textContent / peoplePaying;
+  amount = document.getElementById("amount").value / peoplePaying;
   url += "&amount=" + amount;
 
-  note = document.getElementById("note").textContent;
+  note = document.getElementById("note").value;
   url += "&note=" + note;
   alert("Here's your url: " + url);
 }
 
 </script>
-</head>
-<body>
+
+{% endblock %}
+
+{% block content %}
 
 <form>
   How much to charge? <input id="amount" value="$0.00"> <br>
@@ -50,5 +51,6 @@ function createLink()
 </div>
 <input type="submit" onclick="javascript:createLink();">
 </form>
-</body>
-</html>
+
+{% endblock %}
+
