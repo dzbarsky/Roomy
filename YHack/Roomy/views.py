@@ -89,6 +89,7 @@ def addChore(request):
     return HttpResponse()
 
 def newHouse(request):
+    user = User.objects.get(name=request.session['username'])
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
         number=data['stnumber'], \
@@ -97,14 +98,17 @@ def newHouse(request):
         state=data['state'], \
         zipcode=data['zipcode'])
     house.save()
+    user.house = house
     users = request.POST['users']
     for ind in json.loads(users):
         user = json.loads(json.loads(users)[ind])
-        newUser = User(name=user['username'],email=user['email'],phone=user['phone'])
+        newUser = User(name=user['username'],email=user['email'],phone=user['phone'],house=house)
         newUser.save()
-        house.users.add(newUser)
-	request.session['houseName'] = data['name']
+    request.session['houseName'] = data['name']
     return render(request, 'Roomy/index.html')
+
+def viewHouse(request):
+    return HttpResponse()
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))

@@ -105,6 +105,11 @@ h2 {
 		font-size: 12px;
 }
 
+.navbar-collapse{
+		position: relative;
+		left: 50px;
+}
+
 .feed ul{
 		width: 275px;
 		list-style-type: none;

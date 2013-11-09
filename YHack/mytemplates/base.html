@@ -82,10 +82,10 @@
 		  <a class="navbar-brand" href="/">
 				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
 				  <span style="font-weight: bold;">Roomy</span></a>
-		  {% if request.session.houseName %}&mdash;<p class="navbar-text" style="font-size: 16px;">{{ request.session.houseName }}</p>{% endif %}
+		  <p class="navbar-text" style="font-size: 16px;">HOUSENAME</p>
         </div>
         <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav">
 				  <li {% if request.path == '/' %} class="active"{% endif %}>
 				  <a href="/">HOME</a></li>
 				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
