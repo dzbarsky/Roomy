@@ -1,3 +1,5 @@
+from django.db import models
+
 from Roomy.models import *
 
 def add_test_data():
