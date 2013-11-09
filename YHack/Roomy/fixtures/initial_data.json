@@ -1,0 +1,58 @@
+[
+  {
+    "model": "Roomy.day",
+    "pk": 1,
+    "fields": {
+      "short": "Su",
+      "full": "Sunday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 2,
+    "fields": {
+      "short": "M",
+      "full": "Monday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 3,
+    "fields": {
+      "short": "Tu",
+      "full": "Tuesday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 4,
+    "fields": {
+      "short": "W",
+      "full": "Wednesday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 5,
+    "fields": {
+      "short": "Th",
+      "full": "Thursday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 6,
+    "fields": {
+      "short": "F",
+      "full": "Friday"
+    }
+  },
+  {
+    "model": "Roomy.day",
+    "pk": 7,
+    "fields": {
+      "short": "Sa",
+      "full": "Saturday"
+    }
+  }
+]

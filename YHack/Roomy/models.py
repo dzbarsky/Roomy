@@ -18,11 +18,15 @@ class Charge(models.Model):
     amount=models.DecimalField(max_digits=10, decimal_places=2)
     users=models.ManyToManyField(User)
 
+class Day(models.Model):
+    short=models.CharField(max_length=3)
+    full=models.CharField(max_length=10)
+
 class Chore(models.Model):
     name=models.CharField(max_length=140)
     users=models.ManyToManyField(User)
     frequency=models.CharField(max_length=20) 
-    day=models.CharField(max_length=20)
+    days=models.ManyToManyField(Day)
 
 class Note(models.Model):
     title=models.CharField(max_length=100)
