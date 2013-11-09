@@ -201,16 +201,18 @@ $(document).on('click', '.savednote', function(){
 <div class="col-md-3 content">
 <div id="notelist">
 <div class="feed-header text-center">MY NOTES</div><br />	
+<span style="line-height: 2.0;">
     {%if notes %}
     {% for note in notes %}
 
     <div class='savednote' id="{{note.id}}">
-    {{note.title}}
+			<span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;<a href="#">{{note.title}}</a>
     </div>
     {% endfor %}
     {% else %}
     <h1>You don't have any notes yet!</h1>
     {% endif%}
+	</span>
 </div>
 
 </div>
