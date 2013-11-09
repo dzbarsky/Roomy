@@ -97,7 +97,6 @@ def addChore(request):
 
 def newHouse(request):
     user = User.objects.get(name=request.session['username'])
-    print user
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
         number=data['stnumber'], \
@@ -118,8 +117,12 @@ def newHouse(request):
 
 def viewHouse(request):
     house = House.objects.get(name=request.session['houseName'])
-    users = User.objects.filter(house=house.id)
-    return render(request, 'Roomy/viewHouse.html', {'users':users, 'house': house})
+    users = [user for user in User.objects.filter(house=house.id)]
+
+    return render(request, 'Roomy/viewHouse.html', {'users':users,
+                                                    'house': house,
+                                                    'charges': getCharges(request),
+                                                    'chores': getChores(request)})
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
