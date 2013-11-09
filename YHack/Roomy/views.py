@@ -14,7 +14,7 @@ def signin(request):
         request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
-        return newUser(request)
+        return createUser(request)
 
 def logout(request):
     try:
@@ -64,28 +64,19 @@ def view404(request):
     return render(request, '404.html', getParams(request))
 
 def createHouse(request):
-    phone = request.POST['phone']
-    user = User.objects.get(id=request.session['userID'])
-    user.phone = phone
-    user.save()
     return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
-    name = request.POST['username']
-    fb_uid = request.POST['fb_uid']
-    image = request.POST['image']
-    user = User(name=name, fb_uid=fb_uid, image=image)
-    print user.name
-    user.save()
-    print user
-    request.session['username'] = name
-    request.session['userID'] = user.id
-    print request.session['username']
-    resp = HttpResponse()
+    name = request.GET['name']
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
 
 def newUser(request):
-    user = User.objects.get(id=request.session['userID'])
-    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{'name': user.name}))
+    name = request.POST['name']
+    phone = request.POST['phone']
+    user = User(name=name, phone=phone)
+    user.save()
+    request.session['username'] = name
+    return render(request, 'Roomy/createHouse.html')
 
 def chores(request):
     return render(request, 'Roomy/chores.html', getParams(request))
