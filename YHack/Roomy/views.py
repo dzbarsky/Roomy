@@ -11,8 +11,9 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
-        house = user.house
-        request.session['houseName'] = house.name
+        if user.house:
+            house = user.house
+            request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
         return createUser(request)
