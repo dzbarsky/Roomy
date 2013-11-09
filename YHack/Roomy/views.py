@@ -19,17 +19,20 @@ def newUser(request):
     return HttpResponse()
 
 def newHouse(request):
-    name = request.POST['name']
-    number = request.POST['number']
-    street = request.POST['street']
-    city = request.POST['city']
-    state= request.POST['state']
-    zipcode= request.POST['zipcode']
-    roomies = json.dumps(request.POST['roomies'])
-    print roomies
-    house = House(name=name, number=number, street=street, city=city, state=state, zipcode=zipcode)
+    data = json.loads(request.POST['houseData'])
+    house = House(name=data['name'], \
+		  number=data['stnumber'], \
+		  street=data['street'], \
+		  city=data['city'], \
+		  state=data['state'], \
+		  zipcode=data['zipcode'])
     house.save()
-    house.users.add(
+    users = request.POST['users']
+    for ind in json.loads(users):
+	user = json.loads(json.loads(users)[ind])
+        newUser = User(name=user['username'],email=user['email'],phone=user['phone'])
+        newUser.save()
+        house.users.add(newUser)
     return HttpResponse()
 
 def charge(request):
