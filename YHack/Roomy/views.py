@@ -4,14 +4,20 @@ from django.shortcuts import render
 from Roomy.models import *
 import json
 
+def getCharges():
+    return [charge for charge in Charge.objects.all()]
+
+def getChargesDict():
+    return {'charges': getCharges()}
+
 def index(request):
-    return render(request, 'Roomy/index.html')
+    return render(request, 'Roomy/index.html', getChargesDict())
 
 def createHouse(request):
-    return render(request, 'Roomy/createHouse.html')
+    return render(request, 'Roomy/createHouse.html', getChargesDict())
 
 def createUser(request):
-	return render(request, 'Roomy/newuser.html')
+    return render(request, 'Roomy/newuser.html', getChargesDict())
 
 def newUser(request):
     name = request.POST['name']
@@ -22,7 +28,7 @@ def newUser(request):
     return HttpResponse()
 
 def chores(request):
-    return render(request, 'Roomy/chores.html')
+    return render(request, 'Roomy/chores.html', getChargesDict())
 
 def newHouse(request):
     name = request.POST['name']
@@ -42,7 +48,24 @@ def charge(request):
     usersDict = []
     for user in users:
         usersDict.append(user)
-    return render(request, 'Roomy/charge.html', {'users': users})
+    return render(request, 'Roomy/charge.html', {'users': users,
+                                                 'charges': getCharges()})
+
+def doCharge(request):
+    note = request.POST['note']
+    amount = request.POST['amount']
+    users = request.POST['users']
+    users = [user for user in User.objects.all() if str(user.id) in users]
+    charge = Charge(note=note, amount=amount)
+    charge.save()
+    for user in users:
+      charge.users.add(user)
+    charge.save()
+    print "SAVED"
+    return HttpResponse()
+
+def lists(request):
+    return render(request, 'Roomy/lists.html', getChargesDict())
 
 def notes(request):
-    return render(request, 'Roomy/notes.html') 
+    return render(request, 'Roomy/notes.html', getChargesDict())
