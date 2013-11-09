@@ -1,6 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 
+def index(request):
+    return render(request, 'Roomy/index.html')
+
 def newUser(request):
     name = request.POST['name']
     email = request.POST['email']
