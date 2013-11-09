@@ -1,11 +1,52 @@
 <html>
 <head>
+<script>
 
+function createLink()
+{
+  var url = "https://venmo.com/?txn=charge&recipients=";
+    amount=23.25&note=for+dinner&
+      hamilton@venmo.com,646.863.9557,john
+
+  var userCheckBoxes = document.querySelector("#users > input");
+  var peoplePaying = 0;
+  for (var i = 0; i < usersCheckBoxes.length; i++) {
+    if (userCheckBoxes[i].checked) {
+      peoplePaying++;
+      url += userCheckBoxes.nextSibling.getAttribute("data-phone") + ",";
+    }
+  }
+
+  if (peoplePaying == 0) {
+    alert("Nobody paying you?  What?");
+    return;
+  }
+
+  // Strip the trailing comma.
+  url = url.substring(0, url.length() - 1);
+
+  amount = document.getElementById("amount").textContent / peoplePaying;
+  url += "&amount=" + amount;
+
+  note = document.getElementById("note").textContent;
+  url += "&note=" + note;
+  alert("Here's your url: " + url);
+}
+
+</script>
 </head>
 <body>
 
+<form id="users">
+  How much to charge? <input id="amount" value="$0.00"> <br>
+  For what? <input id="note"> <br>
 {% for user in users %}
+  <input type="checkbox" checked>
   <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
     {{ user.name }}
   </div>
 {% endfor %}
+<input type="submit" onclick="javascript:createLink();">
+</form>
+</body>
+</html>
