@@ -1,5 +1,7 @@
-<html>
-<head>
+{% extends "base.html" %}
+
+{% block scripts %}
+
 <script type="text/javascript">
 
 function createLink()
@@ -31,8 +33,10 @@ function createLink()
 }
 
 </script>
-</head>
-<body>
+
+{% endblock %}
+
+{% block content %}
 
 <form>
   How much to charge? <input id="amount" value="$0.00"> <br>
@@ -47,5 +51,6 @@ function createLink()
 </div>
 <input type="submit" onclick="javascript:createLink();">
 </form>
-</body>
-</html>
+
+{% endblock %}
+
