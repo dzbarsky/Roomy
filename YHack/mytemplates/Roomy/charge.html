@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}Roomy: Charges{% endblock %}
+
 {% block scripts %}
 
 <script type="text/javascript">
@@ -8,15 +10,16 @@ function createLink()
 {
   var url = "https://venmo.com/?txn=charge&recipients=";
   var userCheckBoxes = document.querySelectorAll("#users > input");
-  var peoplePaying = 0;
+  var ids = [];
   for (var i = 0; i < userCheckBoxes.length; i++) {
     if (userCheckBoxes[i].checked) {
-      peoplePaying++;
-      url += userCheckBoxes[i].nextSibling.nextSibling.getAttribute("data-phone") + ",";
+      var user = userCheckBoxes[i].nextSibling.nextSibling;
+      url += user.getAttribute("data-phone") + ",";
+      ids.push(user.getAttribute("data-id"));
     }
   }
 
-  if (peoplePaying == 0) {
+  if (ids.length == 0) {
     alert("Nobody paying you?  What?");
     return;
   }
@@ -24,11 +27,15 @@ function createLink()
   // Strip the trailing comma.
   url = url.substring(0, url.length - 1);
 
-  amount = document.getElementById("amount").value / peoplePaying;
+  amount = document.getElementById("amount").value / ids.length;
   url += "&amount=" + amount;
 
   note = document.getElementById("note").value;
   url += "&note=" + note;
+
+  $.post('/doCharge', {'note': note, 'amount': amount, 'users': JSON.stringify(ids)}, function() {
+    alert('success!');
+  });
   alert("Here's your url: " + url);
 }
 
@@ -38,19 +45,42 @@ function createLink()
 
 {% block content %}
 
-<form>
-  How much to charge? <input id="amount" value="$0.00"> <br>
-  For what? <input id="note"> <br>
-  <div id="users">
-  {% for user in users %}
-    <input type="checkbox" checked>
-    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
-      {{ user.name }}
-    </div>
-  {% endfor %}
-</div>
-<input type="submit" onclick="javascript:createLink();">
+<h2>New charge</h2>
+<br />
+
+
+<form class=".form-horizontal">
+		<div class="control-group">
+				<label class="control-label" for="amount">Amount</label>
+		<div class="controls">
+				<input type="text" id="amount" placeholder="$0.00">
+		</div>
+		</div>
+		<br />
+		<div class="control-group">
+				<label class="control-label" for="note">for</label>
+		<div class="controls">
+				<input type="text" id="note" placeholder="Message">
+		</div>
+		</div>
+
+		<div id="users" class="controls">
+				{% for user in users %}
+				<input type="checkbox" checked>
+				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
+						{{ user.name }}
+				</div>
+				{% endfor %}
+		<br />
+		<div class="control-group">
+				<div class="controls">
+						<button id="charge-btn" type="submit" class="btn btn-lg" style="background-color: rgb(114, 218, 114);" onclick="javascript:createLink();" id="charge_submit">
+						CHARGE</button>
+				</div>
+		</div>
 </form>
+<br />
+</div>
 
 {% endblock %}
 
