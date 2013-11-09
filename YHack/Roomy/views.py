@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from twilio.rest import TwilioRestClient
 
 from Roomy.models import *
 import json
@@ -157,5 +158,13 @@ def getNotes(request):
 def notes(request):
     return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request) }))
 
-def channel(request):
-    return render(request, 'Roomy/channel.html')
+def textReminder(request):
+    recipient = request.POST['recipient']
+    message = request.POST['message']
+    account_sid = "AC0e0571d94d5d6dba4ac914247086bde1"
+    auth_token = "1048a4e4a412d86677011b93d0300995"
+    client = TwilioRestClient(account_sid, auth_token)
+    message = client.messages.create(body=message,
+       to=recipient, from_="+19292274747")
+    return HttpResponse()
+
