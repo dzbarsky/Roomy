@@ -76,8 +76,9 @@
 					
 				{% if request.session.username or request.path == '/signin'%}
 				{% block content %}{% endblock %}</div>
-	  
+		{% if charges or chores %} 
 	<div class="col-md-4 col-md-offset-2 feed">
+			{% if charges %}
 			<div class="text-center feed-header">My Charges</div>
 			<br />
 			<ul>
@@ -96,6 +97,8 @@
 					{% endfor %}
 			<br />
 	</ul>
+	{% endif %}
+	{% if chores %}
 			<div class="text-center feed-header" style="border-top: 1px solid rgb(193, 193, 193); padding-top: 8px;">My Chores</div>
 			<br />
 			<ul>
@@ -113,7 +116,9 @@
 					</li>
 					{% endfor %}
 			<br />
+			{% endif %}
 	</div>
+	{% endif %}
 				{% else %}
 				<h2>Login or create an account</h2><br />
 				What's your name?<br>

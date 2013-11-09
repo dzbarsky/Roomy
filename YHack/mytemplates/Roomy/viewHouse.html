@@ -6,6 +6,8 @@
 
 <h2><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ house.name }}</h2>
 
+{{ house.number }} {{ house.street }}, {{ house.city }}, {{ house.state }} {{ house.zipcode }}
+<br /><br />
 <ul style="font-size: 16px;">
 {% for user in users %}
 <li><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.name }}
