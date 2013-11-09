@@ -101,9 +101,9 @@ $(document).on('click', '#save', function() {
             jnote['content'] = content;
             jnote['db'] = 0;
             java_notes[id] = jnote;
-            var newNote = "<div class='savednote' id="+id+">"+title+"</div>";
+			var newNote = "<div class='savednote' id="+id+"><span class='glyphicon glyphicon-list-alt'></span>&nbsp;&nbsp;<a>"+title+"</a></div>";
             console.log(newNote);
-            $('#notelist').append(newNote);
+            $('#notelist-span').append(newNote);
         }   
         console.log(java_notes);
     });
@@ -201,7 +201,7 @@ $(document).on('click', '.savednote', function(){
 <div class="col-md-3 content">
 <div id="notelist">
 <div class="feed-header text-center">MY NOTES</div><br />	
-<span style="line-height: 2.0;">
+<span style="line-height: 2.0;" id="notelist-span">
     {%if notes %}
     {% for note in notes %}
 
