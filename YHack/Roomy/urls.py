@@ -19,6 +19,6 @@ urlpatterns = patterns('',
     url(r'^logout\/$', views.logout, name='logout'),
     url(r'^channel\/*', views.channel, name='channel'),
     url(r'^test\/*', views.test, name='test'),
-	url(r'^viewHouse\/$', views.viewHouse, name='viewHouse'),
+    url(r'^viewHouse\/$', views.viewHouse, name='viewHouse'),
     url(r'^.*', views.view404, name='404'),
 )

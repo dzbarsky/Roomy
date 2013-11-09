@@ -139,8 +139,6 @@ def doCharge(request):
 def lists(request):
     return render(request, 'Roomy/lists.html', getParams(request))
 
-
-
 def savedNotes(request):
     title=request.POST['title']
     content=request.POST['content']

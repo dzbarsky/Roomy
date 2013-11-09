@@ -172,7 +172,10 @@
 						data.name = response.name;
 						data.fb_uid = response.id;
 						data.image = 'http://graph.facebook.com/' + response.id + '/picture';
-						$.post('/createUser', data);
+						console.log(data);
+						$.post('/createUser', data, function() {
+							alert('hi')
+						});
 					    });
 					  }
 					</script>
