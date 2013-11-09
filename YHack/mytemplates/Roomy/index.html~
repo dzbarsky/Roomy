@@ -20,7 +20,7 @@
 <button id="clear-button" onclick="javascript:clearCanvas()" class="btn">Clear</button>
 <script>
 //Create a reference to the pixel data for our drawing.
-var pixelDataRef = new Firebase('https://roomy-{% autoescape on %}{{ request.session.houseName }}{% endautoescape%}.firebaseio-demo.com/');
+var pixelDataRef = new Firebase('https://roomy-{{ request.session.houseName|cut:" " }}.firebaseio-demo.com/');
 
 $(document).ready(function () {
   //Set up some globals
