@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     url(r'^addChore$', views.addChore, name='addChore'),
     url(r'^signin$', views.signin, name='signin'),
     url(r'^logout\/$', views.logout, name='logout'),
-    url(r'^channel\/*', views.channel, name='channel'),
     url(r'^viewHouse\/$', views.viewHouse, name='viewHouse'),
+    url(r'^textReminder\/$', views.textReminder, name='textReminder'),
     url(r'^.*', views.view404, name='404'),
 )
