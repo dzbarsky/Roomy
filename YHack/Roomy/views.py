@@ -13,3 +13,10 @@ def newUser(request):
     user = User(name=name, email=email, phone=phone)
     user.save()
     return HttpResponse()
+
+def charge(request):
+    users = User.objects.all()
+    usersDict = []
+    for user in users:
+        usersDict.append(user)
+    return render(request, 'Roomy/charge.html', {'users': users})
