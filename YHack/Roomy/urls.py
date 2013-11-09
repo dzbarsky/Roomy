@@ -5,6 +5,6 @@ from Roomy import views
 urlpatterns = patterns('',
 
     url(r'^$', views.index, name='index'),
-    url(r'^newUser/$', views.newUser, name='newUser'),
+    url(r'^newUser$', views.newUser, name='newUser'),
 
 )

@@ -12,3 +12,4 @@ def newUser(request):
     phone = request.POST['phone']
     user = User(name=name, email=email, phone=phone)
     user.save()
+    return HttpResponse()
