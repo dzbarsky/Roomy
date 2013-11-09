@@ -132,8 +132,6 @@
 					      // have logged in to the app.
 						  alert("calling testAPI()");
 					      testAPI();
-					    } else if (response.status === 'not_authorized') {
-					      // In this case, the person is logged into Facebook, but not into the app, so we call
 					      // FB.login() to prompt them to do so. 
 					      // In real-life usage, you wouldn't want to immediately prompt someone to login 
 					      // like this, for two reasons:
@@ -165,7 +163,7 @@
 					  // This testAPI() function is only called in those cases. 
 					  function testAPI() {
 					    FB.api('/me', function(response) {
-						image = "http://graph.facebook.com/" + response.id = "/picture";
+						var image = "http://graph.facebook.com/" + response.id + "/picture";
 						$.post('/createUser', {'username': response.name, 'fb_uid': response.fb_uid, 'image': image}, function(response) {
 							alert("response = " + response);
 						});
