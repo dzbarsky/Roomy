@@ -36,7 +36,7 @@ function createLink()
   url += "&note=" + note;
 
   $.post('/doCharge', {'note': note, 'url': url, 'amount': amount, 'users': JSON.stringify(ids)}, function() {
-    $("#venmoLink").html("<a href='" + url + "'>Click to process the Venmo charge</a>");
+    window.open(url);
   });
 
   return false;
@@ -81,7 +81,6 @@ function createLink()
 				<div class="controls">
 						<button id="charge-btn" class="btn btn-lg" style="background-color: rgb(114, 218, 114);">
 						CHARGE</button>
-				&nbsp;&nbsp;&nbsp;<span id="venmoLink"></span>
 				</div>
 		</div>
 </form>
