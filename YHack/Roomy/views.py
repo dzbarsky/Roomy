@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from twilio.rest import TwilioRestClient
 
 from Roomy.models import *
 import json
@@ -10,8 +11,9 @@ def signin(request):
     if existing.count() > 0:
         user = User.objects.get(name=name)
         request.session['username'] = name
-        house = user.house
-        request.session['houseName'] = house.name
+        if user.house:
+            house = user.house
+            request.session['houseName'] = house.name
         return render(request, 'Roomy/index.html', dict(getParams(request), **{'roomyUser': user.id}))
     else:
         return createUser(request)
@@ -19,6 +21,7 @@ def signin(request):
 def logout(request):
     try:
         del request.session['username']
+        del request.session['houseName']
     except KeyError:
         pass
     return render(request, 'Roomy/index.html')
@@ -35,9 +38,12 @@ def getCharges(request):
                 continue
     return charges
 
-
-def getUsers():
-    return [user for user in User.objects.all()]
+def getUsers(request):
+    users = []
+    if 'houseName' not in request.session:
+        return users
+    house = House.objects.get(name=request.session['houseName'])
+    return [user for user in User.objects.filter(house=house.id)]
 
 def getChores(request):
     chores = []
@@ -53,7 +59,7 @@ def getChores(request):
 
 def getParams(request):
     return {'charges': getCharges(request),
-            'users': getUsers(),
+            'users': getUsers(request),
             'chores': getChores(request),
             'notes': getNotes(request)}
 
@@ -96,7 +102,6 @@ def addChore(request):
 
 def newHouse(request):
     user = User.objects.get(name=request.session['username'])
-    print user
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
         number=data['stnumber'], \
@@ -118,7 +123,7 @@ def newHouse(request):
 def viewHouse(request):
     house = House.objects.get(name=request.session['houseName'])
     users = User.objects.filter(house=house.id)
-    return render(request, 'Roomy/viewHouse.html', {'users':users})
+    return render(request, 'Roomy/viewHouse.html', dict(getParams(request), **{'house': house, 'users': users}))
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
@@ -179,5 +184,13 @@ def getNotes(request):
 def notes(request):
     return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request) }))
 
-def channel(request):
-    return render(request, 'Roomy/channel.html')
+def textReminder(request):
+    recipient = request.POST['recipient']
+    message = request.POST['message']
+    account_sid = "AC0e0571d94d5d6dba4ac914247086bde1"
+    auth_token = "1048a4e4a412d86677011b93d0300995"
+    client = TwilioRestClient(account_sid, auth_token)
+    message = client.messages.create(body=message,
+       to=recipient, from_="+19292274747")
+    return HttpResponse()
+

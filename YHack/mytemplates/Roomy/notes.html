@@ -15,7 +15,7 @@ Title<input id='title' value="" class='basic' type='text'><br>
 <button id='save'><b>Save Note</b></button><br>
 </div>
 
-<div id='notelist' style="float:left; float:top; width:200px; margin-left:400px;">
+<div style="float:left; float:top; width:300px; margin-left:400px;">
     {%if notes %}
     {% for note in notes %}
 
@@ -24,7 +24,7 @@ Title<input id='title' value="" class='basic' type='text'><br>
     </div>
     {% endfor %}
     {% else %}
-    <h1 id='nonestatement'>no notes in database</h1>
+    <h1>You don't have any notes yet!</h1>
     {% endif%}
 </div>
 

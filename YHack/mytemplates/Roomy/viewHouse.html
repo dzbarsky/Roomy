@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title%}Roomy: My House{% endblock %}
+
+{% block content %}
+
+<h2><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;{{ house.name }}</h2>
+
+<ul style="font-size: 16px;">
+{% for user in users %}
+<li><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;{{ user.name }}
+<span style="font-size: 13px; text-indent: 20px;">({{ user.phone }})</span></li>
+<ul>
+  {% for chore in chores %}
+    {% if user in chore.users.all %}
+	<li> {{ chore.name }} </li><br />
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+</ul>
+
+{% endblock %}
