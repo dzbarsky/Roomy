@@ -29,7 +29,6 @@ def newHouse(request):
     print roomies
     house = House(name=name, number=number, street=street, city=city, state=state, zipcode=zipcode)
     house.save()
-    house.users.add(
     return HttpResponse()
 
 def charge(request):
