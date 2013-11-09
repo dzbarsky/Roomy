@@ -36,12 +36,8 @@ function createLink()
   url += "&note=" + note;
 
   $.post('/doCharge', {'note': note, 'url': url, 'amount': amount, 'users': JSON.stringify(ids)}, function() {
-    // alert('success!');
+    $("#venmoLink").html("<a href='" + url + "'>Click to process the Venmo charge</a>");
   });
-
-  $("#venmoLink").html("<a href='" + url + "'>Click to process the Venmo charge</a>");
-  // alert("Here's your url: " + url);
-
 
   return false;
 }
@@ -75,7 +71,7 @@ function createLink()
 				{% for user in users %}
 				<div class="checkbox">
 						<label>
-								<input type="checkbox" checked>
+								<input type="checkbox" >
 								<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
 						{{ user.name }}
 </div></label></div>
@@ -83,12 +79,20 @@ function createLink()
 		<br />
 		<div class="control-group">
 				<div class="controls">
-						<button a="#" id="charge-btn" class="btn btn-lg" style="background-color: rgb(114, 218, 114);" onclick="javascript:createLink();">
+						<button id="charge-btn" class="btn btn-lg" style="background-color: rgb(114, 218, 114);">
 						CHARGE</button>
 				&nbsp;&nbsp;&nbsp;<span id="venmoLink"></span>
 				</div>
 		</div>
 </form>
+
+<script>
+document.getElementById('charge-btn').addEventListener('click', function (event)
+{
+  event.preventDefault();
+  createLink();
+});
+</script>
 <br />
 </div>
 

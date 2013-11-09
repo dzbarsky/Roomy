@@ -8,7 +8,7 @@
 
 function addChore()
 {
-  var userCheckBoxes = document.querySelectorAll("#users > input");
+  var userCheckBoxes = document.querySelectorAll("#users input");
   var ids = [];
   for (var i = 0; i < userCheckBoxes.length; i++) {
     if (userCheckBoxes[i].checked) {
@@ -39,24 +39,29 @@ function addChore()
 
 <h2>Chores</h2>
 
-Chore <input id="name"> <br>
-People
+<form class=".form-horizontal">
+<div class="control-group">
+		<label class="control-label" for="name">Chore</label>
+<div class="controls">
+		<input id="name" type="text"></div></div>
 		<div id="users" class="controls">
 				{% for user in users %}
+				<div class="checkbox">
+						<label>
 				<input type="checkbox">
 				<div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
 						{{ user.name }}
-				</div>
+</div></label></div>
 				{% endfor %}
-     </div>
-        <br>
+		<div class="control-group">
+				<div class="controls">
         Frequency: Daily <input checked type="radio" value="daily" name="frequency">
                    Weekly <input type="radio" value="weekly" name="frequency">
                    Monthly <input type="radio" value="monthly" name="frequency">
                    Once <input type="radio" value="once" name="frequency">
-                   <br>
-        Rotates? <input type="checkbox" id="rotates">
-                 <br>
+				   <br><br />
+		   </div>
+   </div>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
               style="background-color: rgb(114, 218, 114);"
               onclick="javascript:addChore();" id="chore_submit">
