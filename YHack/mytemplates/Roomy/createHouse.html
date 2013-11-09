@@ -1,1 +1,58 @@
-CREATE HOUSE
+Name<input name='name' class='basic' type='text'><br>
+Number<input name='stnumber' class='basic' type='text'><br>
+Street<input name='street' class='basic' type='text'><br>
+City<input name='city' class='basic' type='text'><br>
+State<input name='state' class='basic' type='text'><br>
+Zip<input name='zipcode' class='basic' type='text'><br>
+<button id='add'><b>+</b></button><button id='sub'><b>-</b></button><br>
+<div id='newusers'>
+    <div class='newUser' id='xuser' style='display:none'>
+        Name<input name='username' type='text'><br>
+        Email<input name='email' type='text'><br>
+        Phone<input name='phone' type='text'><br>
+    </div>
+</div>
+<button id='submit'>Submit</button>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+var numUsers = 0;
+
+$('#add').click(function() {
+    numUsers++;
+    if ($('#user' + numUsers).length > 0) {
+        $('#user' + numUsers).show();
+    } else {
+        var user = $('#xuser').clone();
+        $('#newusers').append(user);
+	$(user).attr('id','user'+numUsers).show();
+    }
+});
+
+$('#sub').click(function() {
+    if (numUsers < 1) return;
+    $('#user' + numUsers).hide();
+    numUsers--;
+});
+
+$('#submit').click(function() {
+    var houseData = {};
+    $('input.basic').each(function() {
+        houseData[$(this).attr('name')] = $(this).val();
+    });
+    var users = {};
+    $('div[id^=user]:visible').each(function() {
+	var user = {};
+	$(this).find('input').each(function() {
+	    user[$(this).attr('name')] = $(this).val();
+	});
+        console.log(user);
+        console.log(JSON.stringify(user));
+        users[$(this).attr('id')] = JSON.stringify(user);
+    });
+    $.post('/newHouse', { houseData: JSON.stringify(houseData),users: JSON.stringify(users) }, function() {
+	alert('success!');
+    });
+});
+</script>
+

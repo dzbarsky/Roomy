@@ -5,7 +5,7 @@ class User(models.Model):
     email=models.CharField(max_length=100)
     phone=models.CharField(max_length=40)
 
-class Houses(models.Model):
+class House(models.Model):
     name=models.CharField(max_length=140)
     number=models.CharField(max_length=10)
     street=models.CharField(max_length=60)
