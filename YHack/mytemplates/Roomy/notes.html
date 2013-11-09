@@ -42,6 +42,7 @@ Title<input id='title' value="Note title" class='basic' type='text'><br>
 </script>
 <script>
 var java_notes = [];
+var curr_title = "";
 $(document).ready(function() {
     {% for note in notes %}
         var jnote = {};
@@ -55,10 +56,12 @@ $(document).ready(function() {
 $(document).on('click', '#write', function() {
     $('#notes').toggle();
     $('#save').toggle();
+    curr_title = document.getElementById("title").value;
 });
 $(document).on('click', '#save', function() {
     var noteData = {}
-    title = document.getElementById("title").value;
+    if (curr_title.equals(""))
+        title = document.getElementById("title").value;
     content = nicEditors.findEditor('area2').getContent();
     noteData['title']=title;
     noteData['content']=content;
@@ -73,11 +76,13 @@ $(document).on('click', '.savednote', function(){
     var id = $(this).attr('id');
     note = java_notes[id];
     content = note['content'];
+    curr_title = note['title'];
     // for note in java_notes:
     //     if id == note.id:
     //         content = note.content;
     nicEditors.findEditor('area2').setContent(content);
     $('#notes').show();
+    $('#save').show();
 
 })
 </script>
