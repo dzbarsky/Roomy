@@ -119,7 +119,9 @@ def newHouse(request):
     return render(request, 'Roomy/index.html')
 
 def viewHouse(request):
-    return render(request, 'Roomy/viewHouse.html', getParams(request))
+    house = House.objects.get(name=request.session['houseName'])
+    users = User.objects.filter(house=house.id)
+    return render(request, 'Roomy/viewHouse.html', dict(getParams(request), **{'house': house, 'users': users}))
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
