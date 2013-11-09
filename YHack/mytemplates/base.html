@@ -49,12 +49,12 @@
 		  <!-- <span class="glyphicon glyphicon-home btn-lg"></span> -->
 		  <a class="navbar-brand" href="/">
 				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
-				  <span style="font-weight: bold;">Roomy</span>: {{ house_name }}</a>
+				  <span style="font-weight: bold;">Roomy</span></a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
 				  <li {% if request.path == '/' %} class="active"{% endif %}>
-				  <a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;HOME</a></li>
+				  <a href="/">HOME</a></li>
 				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
 				  <li {% if request.path == '/chores/' %} class="active"{% endif %}><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
 				  <li {% if request.path == '/charge/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>

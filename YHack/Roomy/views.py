@@ -57,19 +57,20 @@ def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
 
 def createHouse(request):
-    return render(request, 'Roomy/createHouse.html', getParamsrequest())
+    return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
     name = request.GET['name']
     return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
 
 def newUser(request):
-    name = request.session['username']
+    name = request.POST['name']
     email = request.POST['email']
     phone = request.POST['phone']
     user = User(name=name, email=email, phone=phone)
     user.save()
-    return createHouse(request)
+    request.session['username'] = name
+    return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def chores(request):
     return render(request, 'Roomy/chores.html', getParams(request))
@@ -90,15 +91,15 @@ def addChore(request):
 def newHouse(request):
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
-		  number=data['stnumber'], \
-		  street=data['street'], \
-		  city=data['city'], \
-		  state=data['state'], \
-		  zipcode=data['zipcode'])
+        number=data['stnumber'], \
+        street=data['street'], \
+        city=data['city'], \
+        state=data['state'], \
+        zipcode=data['zipcode'])
     house.save()
     users = request.POST['users']
     for ind in json.loads(users):
-	user = json.loads(json.loads(users)[ind])
+        user = json.loads(json.loads(users)[ind])
         newUser = User(name=user['username'],email=user['email'],phone=user['phone'])
         newUser.save()
         house.users.add(newUser)
