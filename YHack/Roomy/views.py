@@ -123,3 +123,9 @@ def lists(request):
 
 def notes(request):
     return render(request, 'Roomy/notes.html', getParams(request))
+
+def channel(request):
+    return render(request, 'Roomy/channel.html')
+
+def test(request):
+    return render(request, 'Roomy/test.html')
