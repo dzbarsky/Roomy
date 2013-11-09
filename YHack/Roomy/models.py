@@ -23,4 +23,3 @@ class Chore(models.Model):
     name=models.CharField(max_length=140)
     users=models.ManyToManyField(User)
     frequency=models.CharField(max_length=20)
-    rotates=models.BooleanField()

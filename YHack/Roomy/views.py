@@ -39,10 +39,9 @@ def chores(request):
 def addChore(request):
     name = request.POST['name']
     frequency = request.POST['frequency']
-    rotates = request.POST['rotates']
     users = request.POST['users']
     users = [user for user in User.objects.all() if str(user.id) in users]
-    chore = Chore(name=name, frequency=frequency, rotates=rotates)
+    chore = Chore(name=name, frequency=frequency)
     chore.save()
     for user in users:
       chore.users.add(user)

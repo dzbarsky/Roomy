@@ -23,10 +23,9 @@ function addChore()
   }
 
   var frequency = $('input[name=frequency]:checked').val();
-  var rotates = document.getElementById('rotates').checked;
   var name = document.getElementById('name').value;
 
-  $.post('/addChore', {'name': name, 'frequency': frequency, 'rotates': rotates, 'users': JSON.stringify(ids)}, function() {
+  $.post('/addChore', {'name': name, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
 }
