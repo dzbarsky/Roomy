@@ -64,7 +64,7 @@ def getParams(request):
             'notes': getNotes(request)}
 
 def index(request):
-    return render(request, 'Roomy/index.html', getParams(request))
+    return render(request, 'Roomy/index.html')
 
 def view404(request):
     return render(request, '404.html', getParams(request))
