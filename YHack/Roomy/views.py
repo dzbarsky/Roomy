@@ -14,6 +14,9 @@ def newUser(request):
     user.save()
     return HttpResponse()
 
+def chores(request):
+    return render(request, 'Roomy/chores.html')
+
 def charge(request):
     users = User.objects.all()
     usersDict = []

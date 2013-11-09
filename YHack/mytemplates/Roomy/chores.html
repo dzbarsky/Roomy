@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+
+<script type="text/javascript">
+
+function createLink()
+{
+  var url = "https://venmo.com/?txn=charge&recipients=";
+  var userCheckBoxes = document.querySelectorAll("#users > input");
+  var peoplePaying = 0;
+  for (var i = 0; i < userCheckBoxes.length; i++) {
+    if (userCheckBoxes[i].checked) {
+      peoplePaying++;
+      url += userCheckBoxes[i].nextSibling.nextSibling.getAttribute("data-phone") + ",";
+    }
+  }
+
+  if (peoplePaying == 0) {
+    alert("Nobody paying you?  What?");
+    return;
+  }
+
+  // Strip the trailing comma.
+  url = url.substring(0, url.length - 1);
+
+  amount = document.getElementById("amount").value / peoplePaying;
+  url += "&amount=" + amount;
+
+  note = document.getElementById("note").value;
+  url += "&note=" + note;
+  alert("Here's your url: " + url);
+}
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<form>
+  How much to charge? <input id="amount" value="$0.00"> <br>
+  For what? <input id="note"> <br>
+  <div id="users">
+  {% for user in users %}
+    <input type="checkbox" checked>
+    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
+      {{ user.name }}
+    </div>
+  {% endfor %}
+</div>
+<input type="submit" onclick="javascript:createLink();">
+</form>
+
+{% endblock %}
+
