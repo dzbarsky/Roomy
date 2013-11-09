@@ -10,6 +10,9 @@ def getCharges():
 def getChargesDict():
     return {'charges': getCharges()}
 
+def getUsers():
+    return [user for user in User.objects.all()]
+
 def index(request):
     return render(request, 'Roomy/index.html', getChargesDict())
 
@@ -28,7 +31,8 @@ def newUser(request):
     return HttpResponse()
 
 def chores(request):
-    return render(request, 'Roomy/chores.html', getChargesDict())
+    return render(request, 'Roomy/chores.html', {'users': getUsers(),
+                                                 'charges': getCharges()})
 
 def newHouse(request):
     name = request.POST['name']
@@ -44,11 +48,7 @@ def newHouse(request):
     return HttpResponse()
 
 def charge(request):
-    users = User.objects.all()
-    usersDict = []
-    for user in users:
-        usersDict.append(user)
-    return render(request, 'Roomy/charge.html', {'users': users,
+    return render(request, 'Roomy/charge.html', {'users': getUsers(),
                                                  'charges': getCharges()})
 
 def doCharge(request):
