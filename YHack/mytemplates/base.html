@@ -50,7 +50,7 @@
 				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
 				  <span style="font-weight: bold;">Roomy</span></a>
 		  <p class="navbar-text" style="font-size: 16px;">
-		  {{ request.session.houseName }}
+		  {% if request.session.houseName %}<a href="/viewHouse/">{{ request.session.houseName }}</a>{% endif %}
 		  
 		  </p>
         </div>
@@ -61,7 +61,7 @@
 				  <li {% if request.path == '/notes/' %} class="active"{% endif %}><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
 				  <li {% if request.path == '/chores/' %} class="active"{% endif %}><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
 				  <li {% if request.path == '/charge/' %} class="active"{% endif %}><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
-				  {% if request.session.username %}<p class="navbar-text" id="welcome">Welcome, {{ request.session.username}}<a href="/logout" style="font-size: 10px;">(logout){% endif %}</a></p>
+				  {% if request.session.username %}<p class="navbar-text" id="welcome">Welcome, {{ request.session.username}}<a href="/logout/" style="font-size: 10px;">(logout){% endif %}</a></p>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -76,14 +76,7 @@
 			<div class="col-md-6 content">
 					
 				{% if request.session.username or request.path == '/signin'%}
-				{% else %}
-				What's your name?<br>
-					<form action='/signin'>
-							<input type='text' name='name'>
-							<input type='submit' class="btn" value='Go'>
-					</form>
-					{% endif %}
-					{% block content %}{% endblock %}</div>
+				{% block content %}{% endblock %}</div>
 	  
 	<div class="col-md-4 col-md-offset-2 feed">
 			<div class="text-center feed-header">My Charges</div>
@@ -122,7 +115,13 @@
 					{% endfor %}
 			<br />
 	</div>
-
+				{% else %}
+				What's your name?<br>
+					<form action='/signin'>
+							<input type='text' name='name'>
+							<input type='submit' class="btn" value='Go'>
+					</form>
+					{% endif %}
 	</div>
 
     <!-- Bootstrap core JavaScript

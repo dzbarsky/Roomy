@@ -96,6 +96,7 @@ def addChore(request):
 
 def newHouse(request):
     user = User.objects.get(name=request.session['username'])
+    print user
     data = json.loads(request.POST['houseData'])
     house = House(name=data['name'], \
         number=data['stnumber'], \
@@ -105,16 +106,19 @@ def newHouse(request):
         zipcode=data['zipcode'])
     house.save()
     user.house = house
+    user.save()
     users = request.POST['users']
     for ind in json.loads(users):
         user = json.loads(json.loads(users)[ind])
-        newUser = User(name=user['username'],email=user['email'],phone=user['phone'],house=house)
+        newUser = User(name=user['username'],phone=user['phone'],house=house)
         newUser.save()
     request.session['houseName'] = data['name']
     return render(request, 'Roomy/index.html')
 
 def viewHouse(request):
-    return HttpResponse()
+    house = House.objects.get(name=request.session['houseName'])
+    users = User.objects.filter(house=house.id)
+    return render(request, 'Roomy/viewHouse.html', {'users':users})
 
 def charge(request):
     return render(request, 'Roomy/charge.html', getParams(request))
@@ -145,15 +149,12 @@ def savedNotes(request):
 
 def getNotes(request):
     notes = []
-    # if 'username' not in request.session:
-    #     return notes
-
     for note in Note.objects.all():
         notes.append(note)
     return notes
 
 def notes(request):
-    return render(request, 'Roomy/notes.html', { 'notes': getNotes(request) })
+    return render(request, 'Roomy/notes.html', dict(getParams(request), **{ 'notes': getNotes(request) }))
 
 def channel(request):
     return render(request, 'Roomy/channel.html')
