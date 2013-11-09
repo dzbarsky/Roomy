@@ -102,3 +102,13 @@ def lists(request):
 
 def notes(request):
     return render(request, 'Roomy/notes.html', getParams())
+
+def savedNotes(request):
+    title=request.POST['title']
+    content=request.POST['content']
+    house=request.POST['house']
+
+    house_object = House.objects.get(id=house)
+    note = Note(title=title, content=content, house=house_object)
+    note.save()
+    return HttpResponse()

@@ -23,3 +23,8 @@ class Chore(models.Model):
     name=models.CharField(max_length=140)
     users=models.ManyToManyField(User)
     frequency=models.CharField(max_length=20)
+
+class Note(models.Model):
+    title=models.CharField(max_length=100)
+    content=models.CharField(max_length=2500)
+    house=models.ForeignKey(House)
