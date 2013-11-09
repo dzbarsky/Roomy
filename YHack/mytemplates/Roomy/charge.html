@@ -4,21 +4,24 @@
 
 {% block scripts %}
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
 <script type="text/javascript">
 
 function createLink()
 {
   var url = "https://venmo.com/?txn=charge&recipients=";
   var userCheckBoxes = document.querySelectorAll("#users > input");
-  var peoplePaying = 0;
+  var ids = [];
   for (var i = 0; i < userCheckBoxes.length; i++) {
     if (userCheckBoxes[i].checked) {
-      peoplePaying++;
-      url += userCheckBoxes[i].nextSibling.nextSibling.getAttribute("data-phone") + ",";
+      var user = userCheckBoxes[i].nextSibling.nextSibling;
+      url += user.getAttribute("data-phone") + ",";
+      ids.push(user.getAttribute("data-id"));
     }
   }
 
-  if (peoplePaying == 0) {
+  if (ids.length == 0) {
     alert("Nobody paying you?  What?");
     return;
   }
@@ -26,11 +29,15 @@ function createLink()
   // Strip the trailing comma.
   url = url.substring(0, url.length - 1);
 
-  amount = document.getElementById("amount").value / peoplePaying;
+  amount = document.getElementById("amount").value / ids.length;
   url += "&amount=" + amount;
 
   note = document.getElementById("note").value;
   url += "&note=" + note;
+
+  $.post('charge', {'note': note, 'amount': amount, 'users': ids}, function() {
+    alert('success!');
+  });
   alert("Here's your url: " + url);
 }
 
@@ -46,7 +53,7 @@ function createLink()
   <div id="users">
   {% for user in users %}
     <input type="checkbox" checked>
-    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
+    <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}" data-id="{{ user.id }}">
       {{ user.name }}
     </div>
   {% endfor %}
