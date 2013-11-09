@@ -57,20 +57,25 @@ def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
 
 def createHouse(request):
+    phone = request.POST['phone']
+    user = User.objects.get(id=request.session['userID'])
+    user.phone = phone
+    user.save()
     return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
-    name = request.GET['name']
-    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
-
-def newUser(request):
     name = request.POST['name']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    user = User(name=name, email=email, phone=phone)
+    fb_uid = request.POST['fb_uid']
+    image = request.POST['image']
+    user = User(name=name, fb_uid=fb_uid, image=image)
     user.save()
     request.session['username'] = name
-    return render(request, 'Roomy/createHouse.html', getParams(request))
+    request.session['userID'] = user.id
+    return HttpResponse()
+
+def newUser(request):
+    user = User.objects.get(id=request.session['userID'])
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{'name': user.name}))
 
 def chores(request):
     return render(request, 'Roomy/chores.html', getParams(request))

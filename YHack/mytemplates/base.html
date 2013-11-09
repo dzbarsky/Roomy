@@ -47,6 +47,9 @@
         });
     
         // Additional initialization code such as adding Event Listeners goes here
+        FB.Event.subscribe(\'auth.login\', function() {
+               window.location.href = "/newUser";
+        });
       };
     
       // Load the SDK asynchronously
@@ -160,9 +163,12 @@
 					  // Here we run a very simple test of the Graph API after login is successful. 
 					  // This testAPI() function is only called in those cases. 
 					  function testAPI() {
-					    console.log('Welcome!  Fetching your information.... ');
 					    FB.api('/me', function(response) {
-					      console.log('Good to see you, ' + response.name + '.');
+						var data = {};
+						data.name = response.name;
+						data.fb_uid = response.id;
+						data.image = 'http://graph.facebook.com/' + response.id + '/picture';
+						$.post('/createUser', data);
 					    });
 					  }
 					</script>

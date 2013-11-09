@@ -1,8 +1,9 @@
 from django.db import models
 
 class User(models.Model):
-    name=models.CharField(max_length=100, unique=True)
-    email=models.CharField(max_length=100)
+    name=models.CharField(max_length=100)
+    fb_uid=models.CharField(max_length=20, unique=True)
+    image=models.CharField(max_length=60) 
     phone=models.CharField(max_length=40)
 
 class House(models.Model):
