@@ -13,3 +13,8 @@ class Houses(models.Model):
     state=models.CharField(max_length=20)
     zipcode=models.CharField(max_length=5)
     users=models.ManyToManyField(User)
+
+class Charge(models.Model):
+    note=models.CharField(max_length=140)
+    amount=models.DecimalField(max_digits=10, decimal_places=2)
+    users=models.ManyToManyField(User)

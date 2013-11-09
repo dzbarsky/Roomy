@@ -44,5 +44,5 @@ def charge(request):
         usersDict.append(user)
     return render(request, 'Roomy/charge.html', {'users': users})
 
-def lists(request):
-    return render(request, 'Roomy/lists.html') 
+def notes(request):
+    return render(request, 'Roomy/notes.html') 
