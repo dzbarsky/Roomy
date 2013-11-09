@@ -8,10 +8,18 @@ def signin(request):
     name = request.GET['name']
     existing = User.objects.filter(name=name)
     if existing.count() > 0:
-	user = User.objects.get(name=name)
+        user = User.objects.get(name=name)
+        request.session['username'] = name
         return render(request, 'Roomy/index.html', dict(getParams(), **{'roomyUser': user.id}))
     else:
         return createUser(request)
+
+def logout(request):
+    try:
+        del request.session['username']
+    except KeyError:
+        pass
+    return render(request, 'Roomy/index.html')
 
 def getCharges():
     return [charge for charge in Charge.objects.all()]

@@ -3,11 +3,7 @@
 {% block title %}Roomy: Home{% endblock %}
 
 {% block content %}
-{% if not roomyUser %}
-What's your name?<br>
-<form action='/signin'>
-<input type='text' name='name'>
-<input type='submit' value='Go'>
-</form>
+{% if request.session.username %}
+Welcome to Roomy, {{ request.session.username }}!
 {% endif %}
 {% endblock %}
