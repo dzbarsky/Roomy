@@ -7,11 +7,11 @@ class User(models.Model):
 
 class House(models.Model):
     name=models.CharField(max_length=140)
-    number=models.CharField(max_length=10)
-    street=models.CharField(max_length=60)
-    city=models.CharField(max_length=60)
-    state=models.CharField(max_length=20)
-    zipcode=models.CharField(max_length=5)
+    number=models.CharField(max_length=10, null=True)
+    street=models.CharField(max_length=60, null=True)
+    city=models.CharField(max_length=60, null=True)
+    state=models.CharField(max_length=20, null=True)
+    zipcode=models.CharField(max_length=5, null=True)
 
 class Charge(models.Model):
     note=models.CharField(max_length=140)

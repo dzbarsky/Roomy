@@ -54,5 +54,30 @@
       "short": "Sa",
       "full": "Saturday"
     }
+  },
+  {
+    "model": "Roomy.house",
+    "pk": 1,
+    "fields": {
+      "name": "White House"
+    }
+  },
+  {
+    "model": "Roomy.note",
+    "pk": 1,
+    "fields": {
+      "title": "Emergency Plan",
+      "content": "In case of fire, stop drop and roll!",
+      "house": 1
+    }
+  },
+  {
+    "model": "Roomy.note",
+    "pk": 2,
+    "fields": {
+      "title": "Shared Items",
+      "content": "The TV belongs to Alex.",
+      "house": 1
+    }
   }
 ]

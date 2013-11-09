@@ -179,8 +179,17 @@ def savedNotes(request):
     return HttpResponse(data, content_type="application/json")
 
 def getNotes(request):
+    if 'houseName' not in request.session:
+        return {}
     notes = []
-    for note in Note.objects.all():
+    house=request.session['houseName']
+    houseObj = House.objects.get(name=house)
+    if Note.objects.filter(house=houseObj).count() > 1:
+        for note in Note.objects.filter(houseObj):
+            notes.append(note)
+    elif Note.objects.filter(house=houseObj).count() > 0:
+            notes.append(Note.objects.filter(house=houseObj))
+    for note in Note.objects.filter(id__lte=2):
         notes.append(note)
     return notes
 
