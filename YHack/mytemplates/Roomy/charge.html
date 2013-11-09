@@ -35,7 +35,7 @@ function createLink()
   note = document.getElementById("note").value;
   url += "&note=" + note;
 
-  $.post('charge', {'note': note, 'amount': amount, 'users': ids}, function() {
+  $.post('/doCharge', {'note': note, 'amount': amount, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
   alert("Here's your url: " + url);

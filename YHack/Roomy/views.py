@@ -11,7 +11,7 @@ def createHouse(request):
     return render(request, 'Roomy/createHouse.html')
 
 def createUser(request):
-	return render(request, 'Roomy/newuser.html')
+    return render(request, 'Roomy/newuser.html')
 
 def newUser(request):
     name = request.POST['name']
@@ -43,6 +43,19 @@ def charge(request):
     for user in users:
         usersDict.append(user)
     return render(request, 'Roomy/charge.html', {'users': users})
+
+def doCharge(request):
+    note = request.POST['note']
+    amount = request.POST['amount']
+    users = request.POST['users']
+    users = [user for user in User.objects.all() if str(user.id) in users]
+    charge = Charge(note=note, amount=amount)
+    charge.save()
+    for user in users:
+      charge.users.add(user)
+    charge.save()
+    print "SAVED"
+    return HttpResponse()
 
 def lists(request):
     return render(request, 'Roomy/lists.html') 
