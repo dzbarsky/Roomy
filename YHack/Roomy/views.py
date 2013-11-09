@@ -21,6 +21,9 @@ def newUser(request):
     user.save()
     return HttpResponse()
 
+def chores(request):
+    return render(request, 'Roomy/chores.html')
+
 def newHouse(request):
     name = request.POST['name']
     number = request.POST['number']
