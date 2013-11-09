@@ -164,12 +164,7 @@
 					  // This testAPI() function is only called in those cases. 
 					  function testAPI() {
 					    FB.api('/me', function(response) {
-						var data = {};
-						data['name'] = response.name;
-						data['fb_uid'] = response.id;
-						data['image'] = 'http://graph.facebook.com/' + response.id + '/picture';
-						console.log(data);
-						$.post('/createUser', data, function() {
+						$.post('/createUser', {'username': response.name, 'fb_uid': response.fb_uid, 'image': 'http://graph.facebook.com/' + response.id + '/picture'}, function() {
 							alert('hi')
 						});
 					    });

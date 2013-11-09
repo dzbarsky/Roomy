@@ -71,7 +71,7 @@ def createHouse(request):
     return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
-    name = request.POST['name']
+    name = request.POST['username']
     fb_uid = request.POST['fb_uid']
     image = request.POST['image']
     user = User(name=name, fb_uid=fb_uid, image=image)
@@ -81,7 +81,7 @@ def createUser(request):
     request.session['username'] = name
     request.session['userID'] = user.id
     print request.session['username']
-    return HttpResponse()
+    resp = HttpResponse()
 
 def newUser(request):
     user = User.objects.get(id=request.session['userID'])
@@ -166,6 +166,3 @@ def notes(request):
 
 def channel(request):
     return render(request, 'Roomy/channel.html')
-
-def test(request):
-    return render(request, 'Roomy/test.html')
