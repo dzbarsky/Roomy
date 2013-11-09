@@ -165,9 +165,9 @@
 					  function testAPI() {
 					    FB.api('/me', function(response) {
 						var data = {};
-						data.name = response.name;
-						data.fb_uid = response.id;
-						data.image = 'http://graph.facebook.com/' + response.id + '/picture';
+						data['name'] = response.name;
+						data['fb_uid'] = response.id;
+						data['image'] = 'http://graph.facebook.com/' + response.id + '/picture';
 						console.log(data);
 						$.post('/createUser', data, function() {
 							alert('hi')
