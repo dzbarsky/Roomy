@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,13 +7,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Starter Template for Bootstrap</title>
+	<title>{% block title %}{% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="template.css" rel="stylesheet">
+    <link href="/static/css/template.css" rel="stylesheet">
 
 	<!-- webkit fonts -->
 	<script type="text/javascript" src="//use.typekit.net/ykk1qod.js"></script>
@@ -23,6 +22,7 @@
 	<!-- google web fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 
+	{% block scripts %}{% endblock %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,14 +45,15 @@
 		  <!-- <span class="glyphicon glyphicon-home btn-lg"></span> -->
 		  <a class="navbar-brand" href="#">
 				  <span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;
-				  <span style="font-weight: bold;">Roomy</span>: HOUSE NAME HERE</a>
+				  <span style="font-weight: bold;">Roomy</span>: {{ house_name }}</a>
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav navbar-right">
-				  <li class="active"><a href="#"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;HOME</a></li>
-            <li><a href="notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
-			<li><a href="chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
-            <li><a href="charges/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
+				  <li class="active">
+				  <a href="/"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;&nbsp;HOME</a></li>
+				  <li><a href="/notes/"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;&nbsp;NOTES</a></li>
+				  <li><a href="/chores/"><span class="glyphicon glyphicon-calendar"></span>&nbsp;&nbsp;&nbsp;CHORES</a></li>
+				  <li><a href="/charge/"><span class="glyphicon glyphicon-usd"></span>&nbsp;&nbsp;&nbsp;CHARGES</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -63,9 +64,11 @@
     </div><!-- /.container -->
 
 	<div class="row">
-	<div class="col-md-4 content">Welcome to Roomy!</div>
+
+	<div class="col-md-4 content">{% block content %}{% endblock %}</div>
 	  
 	<div class="col-md-4 col-md-offset-4 feed">
+			{% block feed %}{% endblock %}
 			<div class="text-center feed-header">My Charges</div>
 			<br />
 			<div class="feed-item">Charge 1</div>

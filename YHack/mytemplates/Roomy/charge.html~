@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% block title %}Roomy: Charges{% endblock %}
-
 {% block scripts %}
 
 <script type="text/javascript">
