@@ -10,7 +10,8 @@
 {% block content %}
 {% if request.session.username %}
 <h4>Welcome to Roomy, {{ request.session.username }}!</h4>
-<br />{% endif %}
+{% endif %}<Br />
+<div id="whiteboard_title" class="text-center">House Whiteboard</div><br />
 <div>
   <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>
