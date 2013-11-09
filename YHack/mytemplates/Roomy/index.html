@@ -5,13 +5,14 @@
 {% block scripts %}
   <script src="https://cdn.firebase.com/v0/firebase.js"></script>
   <script src="/static/js/jquery.min.js"></script>
+  <link href='http://fonts.googleapis.com/css?family=Permanent+Marker' rel='stylesheet' type='text/css'>
 {% endblock %}
 
 {% block content %}
 {% if request.session.username %}
-<h4>Welcome to Roomy, {{ request.session.username }}!</h4>
-{% endif %}<Br />
-<div id="whiteboard_title" class="text-center">House Whiteboard</div><br />
+<!-- <h4>Welcome to Roomy, {{ request.session.username }}!</h4> -->
+{% endif %}
+<div id="whiteboard-title" class="text-center">{% if request.session.houseName %}{{ request.session.houseName }}{% else %}House{% endif %} Whiteboard</div><br />
 <div>
   <canvas id="drawing-canvas" width="480" height="420"></canvas>
 </div>
