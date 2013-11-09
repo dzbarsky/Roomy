@@ -1,0 +1,11 @@
+<html>
+<head>
+
+</head>
+<body>
+
+{% for user in users %}
+  <div class='user' data-phone="{{ user.phone }}" data-email="{{ user.email }}">
+    {{ user.name }}
+  </div>
+{% endfor %}
