@@ -1,5 +1,12 @@
 from django.db import models
 
+class User(models.Model):
+    name=models.CharField(max_length=100)
+    fb_uid=models.CharField(max_length=20, unique=True)
+    image=models.CharField(max_length=60) 
+    phone=models.CharField(max_length=40)
+    house=models.ForeignKey('House', null=True)
+
 class House(models.Model):
     name=models.CharField(max_length=140)
     number=models.CharField(max_length=10)
@@ -7,12 +14,6 @@ class House(models.Model):
     city=models.CharField(max_length=60)
     state=models.CharField(max_length=20)
     zipcode=models.CharField(max_length=5)
-
-class User(models.Model):
-    name=models.CharField(max_length=100, unique=True)
-    email=models.CharField(max_length=100)
-    phone=models.CharField(max_length=40)
-    house=models.ForeignKey('House')
 
 class Charge(models.Model):
     note=models.CharField(max_length=140)
@@ -22,5 +23,9 @@ class Charge(models.Model):
 class Chore(models.Model):
     name=models.CharField(max_length=140)
     users=models.ManyToManyField(User)
-    frequency=models.CharField(max_length=20)
+    frequency=models.CharField(max_length=20) 
     day=models.CharField(max_length=20)
+class Note(models.Model):
+    title=models.CharField(max_length=100)
+    content=models.CharField(max_length=2500)
+    house=models.ForeignKey(House)

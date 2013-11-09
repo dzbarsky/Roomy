@@ -33,6 +33,7 @@ def getCharges(request):
                 continue
     return charges
 
+
 def getUsers():
     return [user for user in User.objects.all()]
 
@@ -51,7 +52,8 @@ def getChores(request):
 def getParams(request):
     return {'charges': getCharges(request),
             'users': getUsers(),
-            'chores': getChores(request)}
+            'chores': getChores(request),
+            'notes': getNotes(request)}
 
 def index(request):
     return render(request, 'Roomy/index.html', getParams(request))
@@ -60,20 +62,25 @@ def view404(request):
     return render(request, '404.html', getParams(request))
 
 def createHouse(request):
+    phone = request.POST['phone']
+    user = User.objects.get(id=request.session['userID'])
+    user.phone = phone
+    user.save()
     return render(request, 'Roomy/createHouse.html', getParams(request))
 
 def createUser(request):
-    name = request.GET['name']
-    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{"name": name}))
-
-def newUser(request):
     name = request.POST['name']
-    email = request.POST['email']
-    phone = request.POST['phone']
-    user = User(name=name, email=email, phone=phone)
+    fb_uid = request.POST['fb_uid']
+    image = request.POST['image']
+    user = User(name=name, fb_uid=fb_uid, image=image)
     user.save()
     request.session['username'] = name
-    return render(request, 'Roomy/createHouse.html', getParams(request))
+    request.session['userID'] = user.id
+    return HttpResponse()
+
+def newUser(request):
+    user = User.objects.get(id=request.session['userID'])
+    return render(request, 'Roomy/newuser.html', dict(getParams(request), **{'name': user.name}))
 
 def chores(request):
     return render(request, 'Roomy/chores.html', getParams(request))
@@ -89,6 +96,12 @@ def addChore(request):
     for user in users:
       chore.users.add(user)
     chore.save()
+    return HttpResponse()
+
+def base(request):
+    user = User.objects.get(name=request.session['username'])
+    house = user.house
+    houseName = house.name
     return HttpResponse()
 
 def newHouse(request):
@@ -130,8 +143,29 @@ def doCharge(request):
 def lists(request):
     return render(request, 'Roomy/lists.html', getParams(request))
 
+
+
+def savedNotes(request):
+    title=request.POST['title']
+    content=request.POST['content']
+    house=request.POST['house']
+
+    house_object = House.objects.get(id=house)
+    note = Note(title=title, content=content, house=house_object)
+    note.save()
+    return HttpResponse()
+
+def getNotes(request):
+    notes = []
+    # if 'username' not in request.session:
+    #     return notes
+
+    for note in Note.objects.all():
+        notes.append(note)
+    return notes
+
 def notes(request):
-    return render(request, 'Roomy/notes.html', getParams(request))
+    return render(request, 'Roomy/notes.html', { 'notes': getNotes(request) })
 
 def channel(request):
     return render(request, 'Roomy/channel.html')
