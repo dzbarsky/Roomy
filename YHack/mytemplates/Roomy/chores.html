@@ -23,9 +23,10 @@ function addChore()
   }
 
   var frequency = $('input[name=frequency]:checked').val();
+  var day = $('input[name=day]:checked').val();
   var name = document.getElementById('name').value;
 
-  $.post('/addChore', {'name': name, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
+  $.post('/addChore', {'name': name, 'day': day, 'frequency': frequency, 'users': JSON.stringify(ids)}, function() {
     alert('success!');
   });
 }
@@ -60,7 +61,18 @@ function addChore()
                    Monthly <input type="radio" value="monthly" name="frequency">
                    Once <input type="radio" value="once" name="frequency">
 				   <br><br />
+        Day of the Week: M <input checked type="radio" value="Monday" name="day">
+                         T <input type="radio" value="Tuesday" name="day">
+                         W <input type="radio" value="Wednesday" name="day">
+                         Th <input type="radio" value="Thursday" name="day">
+                         F <input type="radio" value="Friday" name="day">
+                         S <input type="radio" value="Saturday" name="day">
+                         Su <input type="radio" value="Sunday" name="day">
+				   <br><br />
 		   </div>
+   </div>
+						<button id="chore-btn" type="submit" class="btn btn-lg"
+ 		   </div>
    </div>
 						<button id="chore-btn" type="submit" class="btn btn-lg"
               style="background-color: rgb(114, 218, 114);"

@@ -6,7 +6,6 @@
 
 <h2>Create Account</h2>
 <br><br>
-<input name='name' type='text'>Name</input><br>
 <input name='email' type='text'>Email</input><br>
 <input name='phone' type='text'>Phone</input><br>
 <button id='submit'>Submit</button>
@@ -14,10 +13,8 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script>
 $('#submit').click(function() {
-    var users = { name: $('input[name=name]').val(), email: $('input[name=email]').val(), phone: $('input[name=phone]').val() };
-    $.post('/newUser', users, function() {
-	alert('success!');
-    });
+    var users = { email: $('input[name=email]').val(), phone: $('input[name=phone]').val() };
+    $.post('/newUser', users);
 });
 </script>
 
