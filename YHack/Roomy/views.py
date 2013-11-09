@@ -10,6 +10,9 @@ def index(request):
 def createHouse(request):
     return render(request, 'Roomy/createHouse.html')
 
+def createUser(request):
+	return render(request, 'Roomy/newuser.html')
+
 def newUser(request):
     name = request.POST['name']
     email = request.POST['email']
@@ -40,3 +43,6 @@ def charge(request):
     for user in users:
         usersDict.append(user)
     return render(request, 'Roomy/charge.html', {'users': users})
+
+def lists(request):
+    return render(request, 'Roomy/lists.html') 
