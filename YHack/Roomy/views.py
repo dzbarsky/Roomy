@@ -1,1 +1,9 @@
-# Create your views here.
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def newUser(request):
+    name = request.POST['name']
+    email = request.POST['email']
+    phone = request.POST['phone']
+    user = User(name=name, email=email, phone=phone)
+    user.save()
