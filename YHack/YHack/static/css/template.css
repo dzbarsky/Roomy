@@ -90,7 +90,7 @@ h2 {
 		padding-left: 15px;
 		padding-right: 0px;
 		border-left: 1px solid gray;
-		height: 400px;
+		height: 750px;
 		word-wrap: break-word;
 }
 
@@ -130,6 +130,23 @@ ul{
 		padding: 0;
 		margin: 0;
 		line-height: 2.1;
+}
+
+.colorbox{
+		margin: .5px;
+		width: 24px;
+		height: 24px;
+		border: 1px solid black;
+}
+
+#clear-button{
+		position: relative;
+		top: -8px;
+		padding: 1px 1px 1px 1px;
+		font-size: 12px;
+		text-transform: uppercase;
+		margin-left: 3px;
+		margin-right: 2px;
 }
 
 .content {
